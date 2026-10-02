@@ -52,7 +52,3 @@ The page uses Zachary's karate club network (as distributed with NetworkX) and s
 - V. D. Blondel, J.-L. Guillaume, R. Lambiotte, and E. Lefebvre, "Fast unfolding of communities in large networks," *J. Stat. Mech.* P10008 (2008).
 - M. E. J. Newman, "Equivalence between modularity optimization and maximum likelihood methods for community detection," *Phys. Rev. E* **94**, 052315 (2016).
 - S. Fortunato and M. E. J. Newman, "20 years of network community detection," *Nature Physics* **18**, 848 (2022).
-
-## License
-
-No license has been chosen yet. Add a `LICENSE` file before sharing the code for reuse.
