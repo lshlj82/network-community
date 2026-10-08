@@ -130,8 +130,18 @@ table.stats th{font-weight:500;color:var(--muted)}
 footer{max-width:1180px;margin:40px auto 0;padding-top:24px;border-top:1.5px dashed var(--rule);color:var(--muted);font-size:14px}
 .closing{font-family:var(--hand);font-style:italic;font-size:clamp(21px,2.4vw,27px);line-height:1.3;color:var(--ink);max-width:36ch;margin:0 0 14px}
 </style>
+<script>try { const t = localStorage.getItem("netsci-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<style>
+button.theme-btn{position:fixed; z-index:20; top:calc(env(safe-area-inset-top, 0px) + 12px); right:calc(env(safe-area-inset-right, 0px) + 12px);
+  width:40px; height:40px; padding:0; border-radius:50%; display:grid; place-items:center; cursor:pointer;
+  background:var(--panel); color:var(--ink); border:1px solid var(--rule); box-shadow:0 1px 4px rgba(0,0,0,.12)}
+button.theme-btn:hover{background:var(--panel); color:var(--ink); border-color:var(--ink)}
+button.theme-btn:focus-visible{outline:3px solid var(--link); outline-offset:2px}
+button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+</style>
 </head>
 <body>
+<button id="themeBtn" class="theme-btn" type="button" aria-label="Switch to light mode"></button>
 <nav class="toc" aria-label="Chapters">
   <p class="brand">Communities<br><span class="by">Interactive notes</span></p>
   <ol>
@@ -147,7 +157,6 @@ footer{max-width:1180px;margin:40px auto 0;padding-top:24px;border-top:1.5px das
     <li><a href="#sbm">Stochastic block model</a></li>
     <li><a href="#bench">Benchmarks</a></li>
   </ol>
-  <div class="theme"><button id="themeBtn" type="button">Switch to dark</button></div>
 </nav>
 <main>
 <section class="hero" id="top" data-ch="0">
@@ -720,14 +729,6 @@ const HG=new Graph(19,HE);
 const HGROUP=Array.from({length:19},(_,i)=>i<7?0:i<13?1:2);
 const HPOS=layout(HG,{seed:3,iters:500,gravity:0.05});
 
-/* ---------- theme ---------- */
-(function(){const b=$('themeBtn'),root=document.documentElement;
-  const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const lab=()=>{b.textContent=isDark()?'Switch to light':'Switch to dark'};lab();
-  b.onclick=()=>{root.dataset.theme=isDark()?'light':'dark';try{localStorage.setItem('theme',root.dataset.theme)}catch(e){}lab()};
-  try{const s=localStorage.getItem('theme');if(s){root.dataset.theme=s;lab()}}catch(e){}
-})();
-
 /* ---------- TOC highlight ---------- */
 (function(){const links=[...document.querySelectorAll('.toc a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
   if(!('IntersectionObserver' in window))return;
@@ -1092,6 +1093,21 @@ const LOUVAIN_K=louvain(KARATE,1,1);
 })();
 })();
 
+</script>
+<script>
+(() => {
+  // light/dark switch; the choice is remembered across all of the course demos
+  const btn = document.getElementById("themeBtn"), root = document.documentElement, mq = matchMedia("(prefers-color-scheme: dark)");
+  const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
+  const current = () => root.dataset.theme || (mq.matches ? "dark" : "light");
+  const sync = () => { const dark = current() === "dark", label = dark ? "Switch to light mode" : "Switch to dark mode";
+    btn.innerHTML = dark ? SUN : MOON; btn.setAttribute("aria-label", label); btn.title = label; };
+  btn.addEventListener("click", () => { const next = current() === "dark" ? "light" : "dark"; root.dataset.theme = next;
+    try { localStorage.setItem("netsci-theme", next); } catch (e) {} sync(); });
+  mq.addEventListener("change", sync);
+  sync();
+})();
 </script>
 </body>
 </html>
