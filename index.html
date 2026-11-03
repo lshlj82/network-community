@@ -13,7 +13,7 @@
 <style>
 :root{
   --paper:#F1F4F8;--grid:#DFE5EE;--panel:#FFFFFF;--ink:#1B2238;--muted:#566079;--rule:#C7CFDC;
-  --marker:#D11F3A;--edge:#AEB7C7;--edge-strong:#1B2238;--none:#BAC2D0;--magenta:#C2399F;--link:#2F6BDB;
+  --marker:#D11F3A;--edge:#AEB7C7;--edge-strong:#1B2238;--none:#BAC2D0;--magenta:#C2399F;--link:#285FC8;--ok-text:#1D7A4A;
   --c0:#E5484D;--c1:#2F6BDB;--c2:#2A9D63;--c3:#E39B0B;--c4:#8E44C8;--c5:#0F9DB0;--c6:#9A6136;--c7:#D9488F;
   --hand:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --text:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -22,11 +22,11 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#111726;--grid:#1B2335;--panel:#161E30;--ink:#E6EAF3;--muted:#9AA5BC;--rule:#2C3750;
-  --marker:#FF5A6E;--edge:#3E4A63;--edge-strong:#E6EAF3;--none:#4B566D;--magenta:#E163C3;--link:#6C9BFF;
+  --marker:#FF5A6E;--edge:#3E4A63;--edge-strong:#E6EAF3;--none:#4B566D;--magenta:#E163C3;--link:#6C9BFF;--ok-text:#3CC383;
   --c0:#FF6B6F;--c1:#5B8DEF;--c2:#3CC383;--c3:#F5B53A;--c4:#B07AF0;--c5:#2DC3D6;--c6:#C98A5C;--c7:#F07AB3;color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#111726;--grid:#1B2335;--panel:#161E30;--ink:#E6EAF3;--muted:#9AA5BC;--rule:#2C3750;
-  --marker:#FF5A6E;--edge:#3E4A63;--edge-strong:#E6EAF3;--none:#4B566D;--magenta:#E163C3;--link:#6C9BFF;
+  --marker:#FF5A6E;--edge:#3E4A63;--edge-strong:#E6EAF3;--none:#4B566D;--magenta:#E163C3;--link:#6C9BFF;--ok-text:#3CC383;
   --c0:#FF6B6F;--c1:#5B8DEF;--c2:#3CC383;--c3:#F5B53A;--c4:#B07AF0;--c5:#2DC3D6;--c6:#C98A5C;--c7:#F07AB3;color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
@@ -77,7 +77,7 @@ main{margin-left:232px;padding:0 40px 80px}
 .math{overflow-x:auto;overflow-y:hidden;margin:10px 0 16px}
 .bench{margin:0;background:var(--panel);border:1.5px solid var(--ink);border-radius:6px;padding:16px 18px 18px;position:relative;min-width:0}
 .bench>.how{font-family:var(--hand);font-style:italic;font-size:17px;line-height:1.35;color:var(--muted);margin:0 0 8px}
-@media (max-width:960px){.chapter{grid-template-columns:1fr;padding-top:48px}}
+@media (max-width:960px){.chapter{grid-template-columns:minmax(0,1fr);padding-top:48px}.chapter>*{min-width:0}}
 
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
 button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--ink);border-radius:4px;padding:6px 12px;cursor:pointer;line-height:1.2}
@@ -97,7 +97,7 @@ label.slider input{flex:1;min-width:140px;accent-color:var(--marker)}
 .readout b{display:block;font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
 .verdict{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .pill{font-size:13.5px;border:1.5px solid currentColor;border-radius:999px;padding:3px 10px}
-.pill.yes{color:var(--c2)}.pill.no{color:var(--marker)}
+.pill.yes{color:var(--ok-text)}.pill.no{color:var(--marker)}
 .ann{font-family:var(--hand);font-style:italic;color:var(--marker);font-size:17px;line-height:1.35;min-height:1.2em;margin:4px 0}
 .log{font-size:13.5px;color:var(--muted);min-height:1.4em;margin:6px 0 0}
 .big{font-size:40px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1;word-break:break-all}
@@ -232,7 +232,7 @@ h1.course-title .course-title-ko{display:block;font-family:"Noto Serif KR","STIX
     <h3>Kernighan–Lin algorithm</h3>
     <p>Start from an arbitrary bisection. For every pair \(i\in A, j\in B\), compute how the cut would change if they swapped. Swap the pair with the largest decrease (or smallest increase), lock both, and repeat until all nodes are locked. Keep the prefix of swaps with the best cut, then start a new pass. Stop when a pass no longer improves the cut.</p>
     <p>It is greedy and can get stuck in local optima, so it is widely used as a post-processing step to polish partitions from other methods.</p>
-    <div class="code">partition = nx.community.kernighan_lin_bisection(G)</div>
+    <div class="code" tabindex="0" role="region" aria-label="Python code">partition = nx.community.kernighan_lin_bisection(G)</div>
   </div>
   <figure class="bench">
     <p class="how">Click a node to move it to the other side.</p>
@@ -259,7 +259,7 @@ h1.course-title .course-title-ko{display:block;font-family:"Noto Serif KR","STIX
     <p class="ann" id="hierAnn" aria-live="polite">Pick a node, then another.</p>
     <label class="slider">Cut at similarity <input type="range" id="hierT" min="0" max="1" step="0.005" value="0.3"> <output id="hierTo">0.30</output></label>
     <div class="controls"><button type="button" id="hierBest">Cut where Q is highest</button></div>
-    <div class="wide"><svg class="dendro" id="dendro" viewBox="0 0 620 240" role="img" aria-label="Dendrogram"></svg></div>
+    <div class="wide" tabindex="0" role="region" aria-label="Dendrogram (scrolls sideways)"><svg class="dendro" id="dendro" viewBox="0 0 620 240" role="img" aria-label="Dendrogram"></svg></div>
     <div class="readout" id="hierRead"></div>
   </figure>
 </section>
@@ -276,7 +276,7 @@ h1.course-title .course-title-ko{display:block;font-family:"Noto Serif KR","STIX
       <li>Recalculate the betweenness of the remaining links, and repeat until none remain.</li>
     </ul>
     <p>The result is again a hierarchy of partitions. Recalculation makes it slow, \(O(m^2 n)\), impractical beyond roughly 10,000 nodes.</p>
-    <div class="code">partitions = nx.community.girvan_newman(G)  # hierarchy of partitions</div>
+    <div class="code" tabindex="0" role="region" aria-label="Python code">partitions = nx.community.girvan_newman(G)  # hierarchy of partitions</div>
     <p class="note">So which level do we keep? We need a score. Hence modularity, next.</p>
   </div>
   <figure class="bench">
@@ -296,7 +296,7 @@ h1.course-title .course-title-ko{display:block;font-family:"Noto Serif KR","STIX
     <p>\(k_ik_j/2m\) is the Newman–Girvan null-model term, the expected number of edges between \(i\) and \(j\) if links were rewired at random keeping degrees. \(g_i\) is the community of node \(i\), \(\delta\) the Kronecker delta, and \(\gamma\) the resolution parameter (1 by default). Counting per community instead of per pair gives the equivalent form</p>
     <div class="math">\[ Q=\sum_C\left[\frac{L_C}{L}-\gamma\left(\frac{k_C}{2L}\right)^2\right] \]</div>
     <p>Directed and weighted versions follow by modifying the adjacency matrix suitably, e.g. \(Q_w=\frac1W\sum_C\left(W_C-\frac{s_C^2}{4W}\right)\).</p>
-    <div class="code">Q = nx.community.quality.modularity(G, partition)
+    <div class="code" tabindex="0" role="region" aria-label="Python code">Q = nx.community.quality.modularity(G, partition)
 nx.community.greedy_modularity_communities(G)</div>
     <p>Greedy modularity optimization starts from singletons and keeps merging the pair of communities that raises \(Q\) the most, stopping at the peak.</p>
   </div>
@@ -311,7 +311,7 @@ nx.community.greedy_modularity_communities(G)</div>
     <p class="cap" style="margin-top:12px">Modularity Q</p>
     <p class="big" id="modQ" aria-live="polite"></p>
     <p class="ann" id="modAnn"></p>
-    <div class="wide"><table class="stats" id="modTable"></table></div>
+    <div class="wide" tabindex="0" role="region" aria-label="Modularity table (scrolls sideways)"><table class="stats" id="modTable"></table></div>
     <p class="cap">Strong and weak here use the less stringent, partition-based definitions: compared with each other community rather than with the whole rest of the network.</p>
   </figure>
 </section>
@@ -325,7 +325,7 @@ nx.community.greedy_modularity_communities(G)</div>
       <li><b>Community aggregation.</b> Replace each community by a supernode. Links between supernodes carry the summed weight of links between their groups; links inside a group become a weighted self-loop.</li>
     </ul>
     <p>Repeat on the supernetwork until \(Q\) stops increasing. The random order of node visits makes the result <b>stochastic</b>: reshuffle to see different answers.</p>
-    <div class="code">nx.community.louvain_communities(G, resolution=1)
+    <div class="code" tabindex="0" role="region" aria-label="Python code">nx.community.louvain_communities(G, resolution=1)
 # or: import community; community.best_partition(G)</div>
     <p>Variants such as GenLouvain (generalized Louvain) extend the idea, e.g. to multilayer networks.</p>
   </div>
@@ -369,13 +369,13 @@ nx.community.greedy_modularity_communities(G)</div>
     <p>To detect communities, fit the model: for a given partition, maximize the likelihood that an SBM reproduces the observed links. The degree-corrected version (DCSBM) maximizes</p>
     <div class="math">\[ \mathcal{L}(G\,|\,g)=\sum_{r,s=1}^{q}L_{rs}\log\left(\frac{L_{rs}}{k_rk_s}\right) \]</div>
     <p>Newman (2016) showed that modularity maximization with resolution \(\gamma=\frac{\omega_{in}-\omega_{out}}{\log\omega_{in}-\log\omega_{out}}\) is equivalent to maximum-likelihood fitting of a planted-partition DCSBM.</p>
-    <div class="code">G = nx.generators.stochastic_block_model(sizes, P)</div>
+    <div class="code" tabindex="0" role="region" aria-label="Python code">G = nx.generators.stochastic_block_model(sizes, P)</div>
   </div>
   <figure class="bench">
     <p class="how">Click a cell of the block matrix, then set its probability.</p>
     <div class="controls"><div class="seg" role="group" aria-label="SBM preset"><button type="button" data-sb="comm" aria-pressed="true">community</button><button type="button" data-sb="cp">core–periphery</button><button type="button" data-sb="bip">disassortative</button><button type="button" data-sb="rand">random</button></div><button type="button" id="sbNew">New sample</button></div>
     <div class="two">
-      <div><svg id="sbMatrix" class="matrix" viewBox="0 0 220 220" role="img" aria-label="Block probability matrix"></svg>
+      <div><svg id="sbMatrix" class="matrix" viewBox="0 0 220 220" role="group" aria-label="Block probability matrix"></svg>
         <label class="slider" style="margin-top:8px"><span id="sbCellName">p</span> <input type="range" id="sbP" min="0" max="0.6" step="0.01"> <output id="sbPo"></output></label></div>
       <div><svg id="sbAdj" viewBox="0 0 220 220" role="img" aria-label="Adjacency matrix of the sample"></svg><p class="cap">Adjacency matrix A, nodes ordered by group</p></div>
     </div>
@@ -634,7 +634,14 @@ function rewire(G,seed,swaps){
 }
 
 /* Fruchterman–Reingold layout -> positions in [0,1]^2 */
-function layout(G,{seed=1,iters=350,gravity=0.06,groups=null}={}){
+// layouts are deterministic for a given graph and seed, so they are cached; an iteration loop also stops once nothing moves
+const layoutCache=new Map();
+function layout(G,opt={}){
+  const key=[opt.seed,opt.iters,opt.gravity,opt.groups?opt.groups.join(','):'',G.n,G.edges.map(e=>e[0]+'-'+e[1]).join(',')].join('|');
+  if(!layoutCache.has(key)){if(layoutCache.size>40)layoutCache.delete(layoutCache.keys().next().value);layoutCache.set(key,layoutRun(G,opt));}
+  return layoutCache.get(key).map(p=>p.slice());
+}
+function layoutRun(G,{seed=1,iters=350,gravity=0.06,groups=null}={}){
   const n=G.n,rand=mulberry(seed);const x=new Float64Array(n),y=new Float64Array(n);
   for(let i=0;i<n;i++){
     if(groups){const q=Math.max(...groups)+1,ang=2*Math.PI*groups[i]/q;x[i]=.5+.25*Math.cos(ang)+(rand()-.5)*.2;y[i]=.5+.25*Math.sin(ang)+(rand()-.5)*.2}
@@ -642,12 +649,13 @@ function layout(G,{seed=1,iters=350,gravity=0.06,groups=null}={}){
   const k=Math.sqrt(1/n)*0.9;let t=0.1;
   const dx=new Float64Array(n),dy=new Float64Array(n);
   for(let it=0;it<iters;it++){
-    dx.fill(0);dy.fill(0);
+    dx.fill(0);dy.fill(0);let mv=0;
     for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){let ex=x[i]-x[j],ey=y[i]-y[j];let d2=ex*ex+ey*ey+1e-6;const f=k*k/d2;dx[i]+=ex*f;dy[i]+=ey*f;dx[j]-=ex*f;dy[j]-=ey*f}
     for(const [a,b] of G.edges){const ex=x[a]-x[b],ey=y[a]-y[b];const d=Math.sqrt(ex*ex+ey*ey)+1e-9;const f=d/k;dx[a]-=ex*f;dy[a]-=ey*f;dx[b]+=ex*f;dy[b]+=ey*f}
     for(let i=0;i<n;i++){dx[i]-=(x[i]-.5)*gravity*n*0.3;dy[i]-=(y[i]-.5)*gravity*n*0.3;
-      const d=Math.sqrt(dx[i]*dx[i]+dy[i]*dy[i])+1e-9;const s=Math.min(d,t)/d;x[i]+=dx[i]*s;y[i]+=dy[i]*s}
+      const d=Math.sqrt(dx[i]*dx[i]+dy[i]*dy[i])+1e-9;const s=Math.min(d,t)/d;x[i]+=dx[i]*s;y[i]+=dy[i]*s;mv=Math.max(mv,Math.min(d,t))}
     t=Math.max(0.002,t*0.985);
+    if(mv<1e-6)break;
   }
   let mnx=Infinity,mxx=-Infinity,mny=Infinity,mxy=-Infinity;for(let i=0;i<n;i++){mnx=Math.min(mnx,x[i]);mxx=Math.max(mxx,x[i]);mny=Math.min(mny,y[i]);mxy=Math.max(mxy,y[i])}
   const sx=mxx-mnx||1,sy=mxy-mny||1;
@@ -679,7 +687,7 @@ function pressGroup(btns,active){btns.forEach(b=>b.setAttribute('aria-pressed',b
 class NetView{
   constructor(host,{W=600,H=420,pad=22,r=7,labels=false,click=false,label=''}={}){
     Object.assign(this,{W,H,pad,r,labels,click});
-    this.svg=el('svg',{viewBox:`0 0 ${W} ${H}`,class:'net',role:'img','aria-label':label});host.appendChild(this.svg);
+    this.svg=el('svg',{viewBox:`0 0 ${W} ${H}`,class:'net',role:click?'group':'img','aria-label':label});host.appendChild(this.svg);
     this.gE=el('g',null,this.svg);this.gO=el('g',null,this.svg);this.gN=el('g',null,this.svg);
     this.onClick=null;this.onHover=null;
   }
