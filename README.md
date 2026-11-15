@@ -15,7 +15,7 @@ The page follows the order of the lecture, in eleven chapters. Each chapter pair
 5. **Hierarchical clustering.** Structural-equivalence (Jaccard) similarity, single, average, and complete linkage, and a dendrogram you can cut at any level.
 6. **Girvan–Newman.** Edge betweenness drawn as edge thickness, removed one edge at a time, with a modularity curve to choose the best level.
 7. **Modularity.** Paint your own partition of Zachary's karate club and see Q and each community's contribution. Load greedy or Louvain results, change the resolution γ, and compare against a degree-preserving randomization.
-8. **Louvain.** Step through the algorithm one node move at a time, see the supernetwork after each aggregation, and reshuffle the visiting order to see its randomness.
+8. **Louvain.** Step through the algorithm one node move at a time, see the supernetwork after each aggregation, and reshuffle the visiting order to see its randomness. A link points to the supplementary demo [The Louvain algorithm, step by step](https://lshlj82.github.io/Louvain-algorithm/) ([source](https://github.com/lshlj82/Louvain-algorithm)).
 9. **Resolution limit.** A ring of cliques where merging pairs of cliques beats keeping them separate, with sliders for ring length, clique size, and γ.
 10. **Stochastic block model.** Edit the block matrix and generate community, core–periphery, disassortative, or random structure.
 11. **Benchmarks.** The Girvan–Newman planted-partition benchmark, normalized mutual information (NMI), and a sweep showing where detection breaks down.
