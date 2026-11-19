@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- lang-link:head -->
+<script>(function(){var p=null;try{p=localStorage.getItem("lshlj82-demo-lang")}catch(e){}if(p&&p!=="ko"&&!/[?&]stay\b/.test(location.search))location.replace("index.html"+location.hash);})();</script>
+<style>
+#langBtn{position:fixed;z-index:21;top:calc(env(safe-area-inset-top,0px) + 12px);right:calc(env(safe-area-inset-right,0px) + 60px);min-width:40px;height:40px;padding:0 10px;border-radius:20px;display:grid;place-items:center;cursor:pointer;text-decoration:none;font:600 14px/1 system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;background:var(--lb-bg,rgba(255,255,255,.92));color:var(--lb-fg,#1d2633);border:1px solid var(--lb-bd,rgba(20,30,45,.18));box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#langBtn:hover{border-color:currentColor}
+#langBtn:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+:root[data-theme="dark"] #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}}
+@media print{#langBtn{display:none}}
+html[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
+</style>
+<!-- lang-link:head-end -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>네트워크 커뮤니티 · Network communities | 네트워크 과학 데모</title>
+<meta name="description" content="네트워크의 커뮤니티 찾기에 관한 대화형 노트. 이상훈 교수의 강의 슬라이드를 바탕으로 Claude Opus 5.5가 만들었습니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},startup:{typeset:true}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<style>
+:root{
+  --paper:#F1F4F8;--grid:#DFE5EE;--panel:#FFFFFF;--ink:#1B2238;--muted:#566079;--rule:#C7CFDC;
+  --marker:#D11F3A;--edge:#AEB7C7;--edge-strong:#1B2238;--none:#BAC2D0;--magenta:#C2399F;--link:#285FC8;--ok-text:#1D7A4A;
+  --c0:#E5484D;--c1:#2F6BDB;--c2:#2A9D63;--c3:#E39B0B;--c4:#8E44C8;--c5:#0F9DB0;--c6:#9A6136;--c7:#D9488F;
+  --hand:"IBM Plex Sans KR","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --text:"IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111726;--grid:#1B2335;--panel:#161E30;--ink:#E6EAF3;--muted:#9AA5BC;--rule:#2C3750;
+  --marker:#FF5A6E;--edge:#3E4A63;--edge-strong:#E6EAF3;--none:#4B566D;--magenta:#E163C3;--link:#6C9BFF;--ok-text:#3CC383;
+  --c0:#FF6B6F;--c1:#5B8DEF;--c2:#3CC383;--c3:#F5B53A;--c4:#B07AF0;--c5:#2DC3D6;--c6:#C98A5C;--c7:#F07AB3;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111726;--grid:#1B2335;--panel:#161E30;--ink:#E6EAF3;--muted:#9AA5BC;--rule:#2C3750;
+  --marker:#FF5A6E;--edge:#3E4A63;--edge-strong:#E6EAF3;--none:#4B566D;--magenta:#E163C3;--link:#6C9BFF;--ok-text:#3CC383;
+  --c0:#FF6B6F;--c1:#5B8DEF;--c2:#3CC383;--c3:#F5B53A;--c4:#B07AF0;--c5:#2DC3D6;--c6:#C98A5C;--c7:#F07AB3;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--text);font-size:16.5px;line-height:1.62;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;background-attachment:fixed;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:var(--link)}
+:focus-visible{outline:2.5px solid var(--marker);outline-offset:2px;border-radius:3px}
+
+.toc{position:fixed;left:0;top:0;bottom:0;width:232px;padding:calc(28px + env(safe-area-inset-top,0px)) 18px 24px 26px;overflow:auto;font-size:14.5px;border-right:1.5px solid var(--rule);background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(4px)}
+.toc .brand{font-family:var(--hand);font-size:21px;font-weight:600;line-height:1.1;margin:0 0 18px}
+.toc ol{list-style:none;padding:0;margin:0;counter-reset:ch}
+.toc li{counter-increment:ch;margin:0}
+.toc a{display:flex;gap:10px;padding:6px 6px;border-radius:4px;color:var(--muted);text-decoration:none;line-height:1.3}
+.toc a::before{content:counter(ch);font-family:var(--hand);font-size:14px;min-width:18px;color:var(--muted);opacity:.6;font-weight:600;line-height:1.3;font-variant-numeric:lining-nums}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--ink);font-weight:500}
+.toc a.on::before{color:var(--marker)}
+.toc .theme{margin-top:22px;font-size:13px}
+.toc .by{font-family:var(--text);font-weight:400;font-size:13px;color:var(--muted)}
+.credit{font-size:13.5px;color:var(--muted);margin:0 0 4px}
+main{margin-left:232px;padding:0 40px 80px}
+@media (max-width:1100px){.toc{display:none}main{margin-left:0;padding:0 20px 60px}}
+
+.hero{max-width:1180px;margin:0 auto;padding:56px 0 30px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:40px;align-items:center}
+.hero h1{font-family:var(--hand);font-weight:600;font-size:clamp(40px,5.2vw,68px);line-height:1;margin:0 0 12px;letter-spacing:-1px}
+.hero .ko{font-family:var(--hand);font-style:italic;font-size:clamp(18px,2vw,22px);color:var(--muted);margin:0 0 22px}
+.hero p{max-width:46ch}
+.def{font-family:var(--hand);font-size:22px;line-height:1.35;color:var(--ink);margin:22px 0 10px;max-width:30ch}
+.def em{font-style:normal;color:var(--marker)}
+.hero .net{background:transparent}
+@media (max-width:860px){.hero{grid-template-columns:1fr;padding-top:36px}}
+
+.chapter{max-width:1180px;margin:0 auto;padding:64px 0 24px;border-top:1.5px dashed var(--rule);display:grid;grid-template-columns:minmax(0,40ch) minmax(0,1fr);gap:24px 48px;align-items:start}
+.chapter>header{grid-column:1/-1}
+.chapter h2{font-family:var(--hand);font-weight:600;font-size:clamp(28px,3.2vw,38px);line-height:1.1;letter-spacing:-.4px;flex-wrap:wrap;margin:0;display:flex;align-items:baseline;gap:16px}
+.chapter h2 .n{font-size:.62em;color:var(--marker);min-width:1.2em}
+.chapter h2 small{font-size:.52em;color:var(--muted);font-weight:400;font-style:italic;letter-spacing:0}
+.prose p{margin:0 0 14px}
+.prose h3{font-size:16.5px;font-weight:600;margin:22px 0 6px}
+.prose ul{padding-left:20px;margin:0 0 14px}
+.prose li{margin-bottom:6px}
+.note{font-family:var(--hand);font-style:italic;color:var(--marker);font-size:18px;line-height:1.4;margin:14px 0}
+.note.blue{color:var(--link)}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:8px 10px;overflow-x:auto;white-space:pre;margin:10px 0 14px}
+.math{overflow-x:auto;overflow-y:hidden;margin:10px 0 16px}
+.bench{margin:0;background:var(--panel);border:1.5px solid var(--ink);border-radius:6px;padding:16px 18px 18px;position:relative;min-width:0}
+.bench>.how{font-family:var(--hand);font-style:italic;font-size:17px;line-height:1.35;color:var(--muted);margin:0 0 8px}
+@media (max-width:960px){.chapter{grid-template-columns:minmax(0,1fr);padding-top:48px}.chapter>*{min-width:0}}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--ink);border-radius:4px;padding:6px 12px;cursor:pointer;line-height:1.2}
+button:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+button.primary{background:var(--ink);color:var(--paper)}
+button.primary:hover{background:color-mix(in srgb,var(--ink) 85%,var(--paper))}
+button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+button:disabled{opacity:.4;cursor:default}
+label.slider{display:flex;align-items:center;gap:10px;font-size:14px;flex-wrap:wrap}
+label.slider input{flex:1;min-width:140px;accent-color:var(--marker)}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:4px;overflow:hidden}
+.seg button{border:0;border-radius:0;border-right:1.5px solid var(--ink)}
+.seg button:last-child{border-right:0}
+
+.readout{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px 16px;margin:12px 0 4px}
+.readout div{font-size:13px;color:var(--muted);line-height:1.3}
+.readout b{display:block;font-size:22px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.verdict{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.pill{font-size:13.5px;border:1.5px solid currentColor;border-radius:999px;padding:3px 10px}
+.pill.yes{color:var(--ok-text)}.pill.no{color:var(--marker)}
+.ann{font-family:var(--hand);font-style:italic;color:var(--marker);font-size:17px;line-height:1.35;min-height:1.2em;margin:4px 0}
+.log{font-size:13.5px;color:var(--muted);min-height:1.4em;margin:6px 0 0}
+.big{font-size:40px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1;word-break:break-all}
+
+svg.net{display:block;width:100%;height:auto;touch-action:manipulation}
+.edge{stroke:var(--edge);stroke-width:1.4}
+.node circle{fill:var(--none);stroke:var(--panel);stroke-width:1.6}
+.hero .node circle{stroke:var(--paper)}
+.node.click{cursor:pointer}
+.node.click:hover circle{stroke:var(--ink);stroke-width:2.2}
+.node.sel circle{stroke:var(--ink);stroke-width:3}
+.node:focus-visible{outline:none}.node:focus-visible circle{stroke:var(--marker);stroke-width:3}
+.nlabel{font-size:9px;fill:#fff;pointer-events:none;font-weight:600;font-family:var(--text)}
+.ring{fill:none;stroke:var(--marker);stroke-width:2.5}
+.wide{overflow-x:auto}
+table.stats{border-collapse:collapse;font-size:13.5px;width:100%;font-variant-numeric:tabular-nums}
+table.stats th,table.stats td{padding:4px 8px;text-align:right;border-bottom:1px solid var(--rule)}
+table.stats th:first-child,table.stats td:first-child{text-align:left}
+table.stats th{font-weight:500;color:var(--muted)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px}
+.brush{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.brush button{width:30px;height:30px;padding:0;border-radius:50%;border:2px solid transparent}
+.brush button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--panel)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:620px){.two{grid-template-columns:1fr}}
+.cap{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.chart text,.dendro text{font-size:11px;fill:var(--muted);font-family:var(--text)}
+.axis{stroke:var(--rule);stroke-width:1}
+.matrix rect.cell{cursor:pointer}
+footer{max-width:1180px;margin:40px auto 0;padding-top:24px;border-top:1.5px dashed var(--rule);color:var(--muted);font-size:14px}
+.closing{font-family:var(--hand);font-style:italic;font-size:clamp(21px,2.4vw,27px);line-height:1.3;color:var(--ink);max-width:36ch;margin:0 0 14px}
+</style>
+<script>try { const t = localStorage.getItem("netsci-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<style>
+button.theme-btn{position:fixed; z-index:20; top:calc(env(safe-area-inset-top, 0px) + 12px); right:calc(env(safe-area-inset-right, 0px) + 12px);
+  width:40px; height:40px; padding:0; border-radius:50%; display:grid; place-items:center; cursor:pointer;
+  background:var(--panel); color:var(--ink); border:1px solid var(--rule); box-shadow:0 1px 4px rgba(0,0,0,.12)}
+button.theme-btn:hover{background:var(--panel); color:var(--ink); border-color:var(--ink)}
+button.theme-btn:focus-visible{outline:3px solid var(--link); outline-offset:2px}
+button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@600&family=Noto+Serif+KR:wght@400&display=swap" rel="stylesheet">
+<style>
+/* Course-wide demo title: the same on every demo page and on the course landing page */
+h1.course-title{font-family:"STIX Two Text","Noto Serif KR",Cambria,"Times New Roman",serif !important;font-weight:600 !important;font-style:normal !important;font-size:clamp(30px,3.6vw,44px) !important;line-height:1.08 !important;letter-spacing:-.01em !important;text-transform:none !important;color:var(--ink) !important;word-break:keep-all}
+h1.course-title .course-title-ko{display:block;font-family:"Noto Serif KR","STIX Two Text",serif;font-weight:400;font-size:.5em;line-height:1.3;letter-spacing:0;color:var(--muted);margin:.3em 0 0}
+/* space above the title, so it starts about 48px (phones: 32px) below the top of the page */
+.hero{padding-top:48px !important}
+@media (max-width:860px){.hero{padding-top:32px !important}}
+</style>
+</head>
+<body>
+<!-- lang-link:body -->
+<a id="langBtn" href="index.html" hreflang="en" lang="en" aria-label="View in English" title="View in English">EN</a>
+<script>document.getElementById("langBtn").addEventListener("click",function(){try{localStorage.setItem("lshlj82-demo-lang","en")}catch(e){}});</script>
+<!-- lang-link:body-end -->
+<button id="themeBtn" class="theme-btn" type="button" aria-label="Switch to light mode"></button>
+<nav class="toc" aria-label="장">
+  <p class="brand">커뮤니티<br><span class="by">대화형 노트</span></p>
+  <ol>
+    <li><a href="#top">커뮤니티란</a></li>
+    <li><a href="#inside">커뮤니티의 안쪽</a></li>
+    <li><a href="#partitions">분할의 개수</a></li>
+    <li><a href="#cut">최소 자르기</a></li>
+    <li><a href="#hier">계층적 군집화</a></li>
+    <li><a href="#gn">거번–뉴먼</a></li>
+    <li><a href="#mod">모듈성</a></li>
+    <li><a href="#louvain">루뱅</a></li>
+    <li><a href="#reslim">분해능 한계</a></li>
+    <li><a href="#sbm">확률적 블록 모형</a></li>
+    <li><a href="#bench">벤치마크</a></li>
+  </ol>
+</nav>
+<main>
+<section class="hero" id="top" data-ch="0">
+  <div>
+    <h1 class="course-title">네트워크 커뮤니티<span class="course-title-ko" lang="en">Network communities</span></h1>
+    <p class="ko">이상훈 교수의 강의 슬라이드를 바탕으로 Claude Opus 5.5가 만들었습니다</p>
+    <p>연결된 노드가 가까이 놓이도록 네트워크를 배치하면, 아주 흔히 무리가 나타납니다. 노드 하나(미시 규모)도 아니고 그래프 전체(거시 규모)도 아닌, 그 중간의 무언가입니다.</p>
+    <p class="def">커뮤니티는 군집 또는 모듈이라고도 하며, <em>사이보다 안에서 연결이 상대적으로 더 빽빽한</em> 노드 집합입니다.</p>
+    <p>많은 경우 커뮤니티는 네트워크가 어떻게 조직되어 있고 어떤 기능을 하는지에 답해 줍니다: 동기화된 뉴런, 생물학적 기능을 공유하는 단백질, 한 주제의 웹 페이지, 리트윗 네트워크의 두 정치 진영 같은 것입니다.</p>
+    <div class="controls"><button class="primary" id="heroColor" type="button" aria-pressed="false">Color the communities</button><button id="heroShake" type="button">다시 배치</button></div>
+  </div>
+  <div id="heroNet"></div>
+</section>
+
+<section class="chapter" id="inside" data-ch="1">
+  <header><h2><span class="n">2</span>커뮤니티의 안쪽 <small>커뮤니티 변수</small></h2></header>
+  <div class="prose">
+    <p>후보 커뮤니티 \(C\)를 골라 봅시다. 그 노드들은 각각 <b>내부 연결선수</b> \(k_i^{int}\)(\(C\) 안의 이웃)와 <b>외부 연결선수</b> \(k_i^{ext}\)(밖의 이웃)를 가지며, \(k_i=k_i^{int}+k_i^{ext}\)입니다.</p>
+    <div class="math">\[ L_C=\tfrac12\sum_{i\in C}k_i^{int},\qquad \delta_C^{int}=\frac{L_C}{\binom{N_C}{2}}=\frac{2L_C}{N_C(N_C-1)},\qquad k_C=\sum_{i\in C}k_i \]</div>
+    <p>커뮤니티는 <b>응집도가 높아야</b> 하고(내부 링크가 많아 노드들이 뭉쳐 있음), <b>분리도가 높아야</b> 합니다(나머지로 가는 링크가 적음).</p>
+    <p>가장 극단적으로 응집된 무리는 완전 부분 네트워크인 클리크이지만, 이는 너무 엄격합니다. 널리 쓰이는 느슨한 판정:</p>
+    <ul>
+      <li><b>강한 커뮤니티:</b> 모든 노드가 밖보다 안에 이웃이 더 많음, 모든 \(i\in C\)에 대해 \(k_i^{int}>k_i^{ext}\).</li>
+      <li><b>약한 커뮤니티:</b> \(\sum_{i\in C}k_i^{int}>\sum_{i\in C}k_i^{ext}\).</li>
+    </ul>
+    <p>커뮤니티는 보통 연결된 부분 네트워크입니다. 클리크는 아니고(일부 내부 링크가 없을 수 있음), 연결 덩어리도 아닙니다(외부 링크가 있음). 가중 네트워크에서는 연결선수 대신 연결 강도를 씁니다.</p>
+  </div>
+  <figure class="bench">
+    <p class="how">노드를 클릭하면 C에 넣거나 뺍니다.</p>
+    <div class="controls"><span><span style="font-size:14px;color:var(--muted)">처음 상태</span></span>
+      <div class="seg" role="group" aria-label="미리 정한 커뮤니티"><button type="button" data-pre="0">무리 A</button><button type="button" data-pre="1">무리 B</button><button type="button" data-pre="2">무리 C</button><button type="button" data-pre="x">비어 있음</button></div></div>
+    <div id="inNet"></div>
+    <p class="ann" id="inAnn" aria-live="polite"></p>
+    <div class="readout" id="inRead"></div>
+    <div class="verdict" id="inVerdict"></div>
+    <p class="cap"><span class="sw" style="background:var(--c2)"></span> C 안 &nbsp; <span class="sw" style="background:var(--magenta)"></span> 밖이지만 C와 연결됨 &nbsp; <span style="color:var(--link);font-weight:600">파란</span> 링크가 C를 나머지와 잇습니다.</p>
+  </figure>
+</section>
+
+<section class="chapter" id="partitions" data-ch="2">
+  <header><h2><span class="n">3</span>분할의 개수 <small>왜 모두 시도해 볼 수 없는가</small></h2></header>
+  <div class="prose">
+    <p><b>분할</b>은 각 노드가 정확히 하나의 커뮤니티에 속하도록 네트워크를 나누는 것입니다. 노드 \(N\)개의 가능한 분할 수는 벨 수입니다:</p>
+    <div class="math">\[ B_N=\sum_{i=0}^{N-1}\binom{N-1}{i}B_i,\qquad B_0=1 \]</div>
+    <p>이는 지수 함수보다 빠르게 커집니다. 군집화 알고리즘은 이 공간의 아주 작은 부분, 흥미로운 해가 있을 가능성이 가장 높은 영역만 탐색합니다.</p>
+    <h3>실제 분할은 더 복잡하다</h3>
+    <p>분할은 <b>계층적</b>일 수 있어서, 여러 규모에서 커뮤니티 안에 커뮤니티가 있습니다. 흔히 <b>이질적</b>이어서 군집마다 성질이 크게 다릅니다. 그리고 많은 실제 네트워크에서 커뮤니티는 <b>겹칩니다</b>: 한 사람이 가족, 직장, 동호회에 동시에 속합니다.</p>
+  </div>
+  <figure class="bench">
+    <label class="slider"><span>노드 수 N</span> <input type="range" id="bellN" min="1" max="60" value="15"> <output id="bellNo">15</output></label>
+    <p class="cap" style="margin-top:14px">B<sub>N</sub>, 노드 N개를 분할하는 방법의 수</p>
+    <p class="big" id="bellOut" aria-live="polite"></p>
+    <p class="ann" id="bellAnn"></p>
+    <svg class="chart" id="bellChart" viewBox="0 0 560 210" role="img" aria-label="로그 눈금의 벨 수"></svg>
+  </figure>
+</section>
+
+<section class="chapter" id="cut" data-ch="3">
+  <header><h2><span class="n">4</span>네트워크 분할 <small>최소 자르기 문제</small></h2></header>
+  <div class="prose">
+    <p>분할은 잘 떨어진 부분 네트워크를 찾습니다: 군집 사이의 링크 수, 즉 <b>자르기 크기</b>가 최소가 되도록 네트워크를 주어진 크기의 주어진 개수의 군집으로 나눕니다.</p>
+    <p class="note">자명한 해: 모든 것을 담은 군집 하나. 자르기 크기 0!</p>
+    <p>그래서 군집의 개수와 균형을 고정해야 합니다. 크기가 같은(또는 노드 하나 차이 나는) 두 군집으로 나누는 것을 <b>그래프 이등분</b>이라 합니다.</p>
+    <h3>커니핸–린 알고리즘</h3>
+    <p>임의의 이등분에서 시작합니다. 모든 쌍 \(i\in A, j\in B\)에 대해 둘을 맞바꾸면 자르기가 어떻게 변할지 계산합니다. 가장 많이 줄이는(또는 가장 적게 늘리는) 쌍을 맞바꾸고, 둘을 잠근 다음, 모든 노드가 잠길 때까지 되풀이합니다. 자르기가 가장 좋았던 맞바꾸기 앞부분만 남기고, 새 단계를 시작합니다. 한 단계가 더 이상 자르기를 개선하지 못하면 멈춥니다.</p>
+    <p>탐욕적이라 국소 최적해에 갇힐 수 있으므로, 다른 방법으로 얻은 분할을 다듬는 후처리 단계로 널리 쓰입니다.</p>
+    <div class="code" tabindex="0" role="region" aria-label="파이썬 코드">partition = nx.community.kernighan_lin_bisection(G)</div>
+  </div>
+  <figure class="bench">
+    <p class="how">노드를 클릭하면 반대쪽으로 옮깁니다.</p>
+    <div class="controls"><button type="button" id="cutAll">모두 한 군집에 넣기</button><button type="button" id="cutRand">무작위 이등분</button><button type="button" class="primary" id="cutKL">커니핸–린 실행</button></div>
+    <div id="cutNet"></div>
+    <div class="readout" id="cutRead"></div>
+    <p class="log" id="cutLog" aria-live="polite"></p>
+  </figure>
+</section>
+
+<section class="chapter" id="hier" data-ch="4">
+  <header><h2><span class="n">5</span>계층적 군집화 <small>데이터 군집화로서의 커뮤니티 찾기</small></h2></header>
+  <div class="prose">
+    <p>데이터 군집화는 같은 군집의 원소들이 다른 군집의 원소보다 서로 더 닮도록 원소들을 묶습니다. 네트워크에서는 노드 사이의 닮음이 필요합니다. 고전적인 것은 <b>구조적 동등성</b>입니다:</p>
+    <div class="math">\[ S_{ij}^{SE}=\frac{|\,\text{neighbors of } i \cap \text{neighbors of } j\,|}{|\,\text{neighbors of } i \cup \text{neighbors of } j\,|} \]</div>
+    <p>두 노드가 닮기 위해 이웃일 필요는 없습니다. 무리 \(G_1,G_2\)를 비교하려면 <b>연결 방식</b>을 고릅니다: 단일(쌍별 닮음의 최댓값), 완전(최솟값), 평균.</p>
+    <p><b>병합</b> 군집화는 노드 하나짜리 무리에서 시작해 가장 닮은 무리 쌍을 되풀이해 합치다가, 무리가 하나 남으면 멈춥니다. 병합의 기록이 <b>계통도</b>이며, 이를 어떤 문턱에서 자르면 분할이 됩니다.</p>
+    <p class="note blue">한계: 노드 수만큼 많은 분할을 내놓지만 하나를 고를 기준이 없고, 결과가 닮음과 연결 방식에 달려 있으며, 큰 네트워크에서는 느립니다.</p>
+  </div>
+  <figure class="bench">
+    <p class="how">두 노드를 클릭하면 그 닮음이 보입니다. 계통도를 자르는 위치를 슬라이더로 옮겨 보세요.</p>
+    <div class="controls"><span><span style="font-size:14px;color:var(--muted)">연결 방식</span></span><div class="seg" role="group" aria-label="연결 방식"><button type="button" data-link="single">단일</button><button type="button" data-link="average" aria-pressed="true">평균</button><button type="button" data-link="complete">완전</button></div></div>
+    <div id="hierNet"></div>
+    <p class="ann" id="hierAnn" aria-live="polite">노드를 하나 고르고, 다른 노드를 고르세요.</p>
+    <label class="slider"><span>자를 닮음 값</span> <input type="range" id="hierT" min="0" max="1" step="0.005" value="0.3"> <output id="hierTo">0.30</output></label>
+    <div class="controls"><button type="button" id="hierBest">Q가 가장 큰 곳에서 자르기</button></div>
+    <div class="wide" tabindex="0" role="region" aria-label="계통도 (옆으로 스크롤)"><svg class="dendro" id="dendro" viewBox="0 0 620 240" role="img" aria-label="계통도"></svg></div>
+    <div class="readout" id="hierRead"></div>
+  </figure>
+</section>
+
+<section class="chapter" id="gn" data-ch="5">
+  <header><h2><span class="n">6</span>거번–뉴먼 <small>다리 없애기, 2002</small></h2></header>
+  <div class="prose">
+    <p>커뮤니티 사이의 링크는 다리 역할을 합니다: 많은 최단 경로가 그 링크를 비집고 지나가야 합니다. <b>링크 사이 중심도</b>가 그 통행량을 셉니다:</p>
+    <div class="math">\[ b_e=\sum_{h\neq j}\frac{\sigma_{hj}(e)}{\sigma_{hj}} \]</div>
+    <p>\(\sigma_{hj}\)는 \(h\)에서 \(j\)까지의 최단 경로 수이고, \(\sigma_{hj}(e)\)는 그중 링크 \(e\)를 지나는 경로 수입니다.</p>
+    <ul>
+      <li>모든 링크의 사이 중심도를 계산합니다.</li>
+      <li>사이 중심도가 가장 큰 링크를 없앱니다 (같으면 무작위로 고름).</li>
+      <li>남은 링크의 사이 중심도를 다시 계산하고, 링크가 남지 않을 때까지 되풀이합니다.</li>
+    </ul>
+    <p>결과는 다시 분할의 계층 구조입니다. 다시 계산하기 때문에 \(O(m^2 n)\)으로 느려서, 노드가 대략 10,000개를 넘으면 쓰기 어렵습니다.</p>
+    <div class="code" tabindex="0" role="region" aria-label="파이썬 코드">partitions = nx.community.girvan_newman(G)  # hierarchy of partitions</div>
+    <p class="note">그렇다면 어느 단계를 남길까요? 점수가 필요합니다. 그래서 다음은 모듈성입니다.</p>
+  </div>
+  <figure class="bench">
+    <p class="how">재커리 가라테 클럽. 링크가 굵을수록 사이 중심도가 높고, 빨간 링크가 다음 차례입니다.</p>
+    <div class="controls"><button type="button" id="gnBack">되돌리기</button><button type="button" class="primary" id="gnStep">다음 링크 없애기</button><button type="button" id="gnBest">Q가 가장 큰 곳으로</button><button type="button" id="gnReset">초기화</button></div>
+    <div id="gnNet"></div>
+    <div class="readout" id="gnRead"></div>
+    <svg class="chart" id="gnChart" viewBox="0 0 560 190" role="img" aria-label="없앤 링크에 따른 모듈성"></svg>
+  </figure>
+</section>
+
+<section class="chapter" id="mod" data-ch="6">
+  <header><h2><span class="n">7</span>모듈성 <small>분할은 얼마나 좋은가?</small></h2></header>
+  <div class="prose">
+    <p>“안은 빽빽하고 밖은 성긴 링크”란 국소적으로 밀도가 다르다는 뜻인데, 무엇에 비해서일까요? 모듈성은 각 커뮤니티를 <b>무작위 기준</b>, 즉 같은 네트워크를 <b>연결선수 보존 무작위화</b>한 것과 비교합니다.</p>
+    <div class="math">\[ Q=\frac{1}{2m}\sum_{i\neq j}\left[A_{ij}-\gamma\frac{k_ik_j}{2m}\right]\delta(g_i,g_j) \]</div>
+    <p>\(k_ik_j/2m\)은 뉴먼–거번 영모형 항으로, 연결선수를 유지한 채 링크를 무작위로 다시 이었을 때 \(i\)와 \(j\) 사이의 기대 링크 수입니다. \(g_i\)는 노드 \(i\)의 커뮤니티, \(\delta\)는 크로네커 델타, \(\gamma\)는 분해능 매개변수(기본값 1)입니다. 쌍별 대신 커뮤니티별로 세면 동등한 꼴을 얻습니다</p>
+    <div class="math">\[ Q=\sum_C\left[\frac{L_C}{L}-\gamma\left(\frac{k_C}{2L}\right)^2\right] \]</div>
+    <p>방향 있는 판과 가중 판은 인접 행렬을 알맞게 바꾸어 얻습니다. 예: \(Q_w=\frac1W\sum_C\left(W_C-\frac{s_C^2}{4W}\right)\).</p>
+    <div class="code" tabindex="0" role="region" aria-label="파이썬 코드">Q = nx.community.quality.modularity(G, partition)
+nx.community.greedy_modularity_communities(G)</div>
+    <p>탐욕적 모듈성 최적화는 노드 하나짜리 무리에서 시작해 \(Q\)를 가장 많이 올리는 커뮤니티 쌍을 계속 합치다가, 꼭대기에서 멈춥니다.</p>
+  </div>
+  <figure class="bench">
+    <p class="how">색을 고른 다음 노드를 클릭해 나만의 분할을 칠해 보세요.</p>
+    <div class="controls"><div class="brush" id="brush" role="group" aria-label="칠할 색"></div></div>
+    <div class="controls"><span><span style="font-size:14px;color:var(--muted)">불러오기</span></span>
+      <div class="seg" role="group" aria-label="미리 정한 분할"><button type="button" data-mp="one">한 무리</button><button type="button" data-mp="single">노드 하나씩</button><button type="button" data-mp="club">실제 갈라짐</button><button type="button" data-mp="greedy">탐욕적</button><button type="button" data-mp="louvain">루뱅</button></div></div>
+    <div id="modNet"></div>
+    <div class="controls"><button type="button" id="modShuffle" aria-pressed="false">Show degree-preserving randomization</button></div>
+    <label class="slider"><span>분해능 γ</span> <input type="range" id="modG" min="0" max="3" step="0.05" value="1"> <output id="modGo">1.00</output></label>
+    <p class="cap" style="margin-top:12px">모듈성 Q</p>
+    <p class="big" id="modQ" aria-live="polite"></p>
+    <p class="ann" id="modAnn"></p>
+    <div class="wide" tabindex="0" role="region" aria-label="모듈성 표 (옆으로 스크롤)"><table class="stats" id="modTable"></table></div>
+    <p class="cap">여기서 강함과 약함은 덜 엄격한, 분할에 기반한 정의를 씁니다: 네트워크의 나머지 전체가 아니라 각 다른 커뮤니티와 비교합니다.</p>
+  </figure>
+</section>
+
+<section class="chapter" id="louvain" data-ch="7">
+  <header><h2><span class="n">8</span>루뱅 알고리즘 <small>빠른 모듈성 최대화</small></h2></header>
+  <div class="prose">
+    <p>다시 노드 하나짜리 무리에서 시작합니다. 각 반복은 두 단계입니다:</p>
+    <ul>
+      <li><b>모듈성 최적화.</b> 노드를 하나씩 방문해, 각 노드를 증가량 \(\Delta Q\)가 가장 큰 이웃 커뮤니티로 옮깁니다. 어떤 이동도 \(Q\)를 올리지 못할 때까지 훑기를 계속합니다.</li>
+      <li><b>커뮤니티 합치기.</b> 각 커뮤니티를 초노드로 바꿉니다. 초노드 사이의 링크는 두 무리 사이 링크들의 가중치 합을 가지고, 무리 안의 링크는 가중 자기 고리가 됩니다.</li>
+    </ul>
+    <p>\(Q\)가 더 이상 늘지 않을 때까지 초네트워크에서 되풀이합니다. 노드를 방문하는 순서가 무작위이므로 결과는 <b>확률적</b>입니다: 순서를 다시 섞으면 다른 답이 나옵니다.</p>
+    <div class="code" tabindex="0" role="region" aria-label="파이썬 코드">nx.community.louvain_communities(G, resolution=1)
+# or: import community; community.best_partition(G)</div>
+    <p>GenLouvain(일반화된 루뱅) 같은 변형은 이 아이디어를 예를 들어 다층 네트워크로 확장합니다.</p>
+    <p class="note blue">후보 이동마다의 모듈성 이득, 원 논문의 노드 16개 예제, 가라테 클럽에서의 수백 번 실행을 천천히 단계별로 보려면 보충 데모 <a href="https://lshlj82.github.io/Louvain-algorithm/ko.html">단계별로 보는 루뱅 알고리즘</a>(<a href="https://lshlj82.github.io/Louvain-algorithm/" hreflang="en" lang="en">English</a> · <a href="https://github.com/lshlj82/Louvain-algorithm">소스</a>)을 보세요.</p>
+  </div>
+  <figure class="bench">
+    <div class="controls"><button type="button" class="primary" id="lvStep">노드 하나 옮기기</button><button type="button" id="lvPass">이 단계 마치기</button><button type="button" id="lvRun">끝까지 실행</button><button type="button" id="lvSeed">순서 다시 섞기</button></div>
+    <div class="two"><div><div id="lvNet"></div><p class="cap">원래 네트워크, 현재 커뮤니티로 색칠</p></div><div><div id="lvSuper"></div><p class="cap" id="lvSuperCap">Supernetwork appears after the first aggregation</p></div></div>
+    <div class="readout" id="lvRead"></div>
+    <p class="log" id="lvLog" aria-live="polite"></p>
+  </figure>
+</section>
+
+<section class="chapter" id="reslim" data-ch="8">
+  <header><h2><span class="n">9</span>분해능 한계</h2></header>
+  <div class="prose">
+    <p>모듈성의 영모형은 전체 링크 수에 의존합니다. 연결선수 합이 대략 \(\sqrt{2L}\)보다 작은 커뮤니티는 이 방법으로는 사실상 보이지 않으며, 다른 군집과 합쳐질 수 있습니다.</p>
+    <p>고전적인 예: 링크 하나씩으로 이어진 클리크의 고리. 모든 클리크가 분명히 커뮤니티인데도, 고리가 충분히 길어지면 이웃한 클리크를 둘씩 합치는 쪽이 더 높은 \(Q\)를 얻습니다.</p>
+    <p>분해능 매개변수 \(\gamma\)가 한 가지 처방입니다: \(\gamma&gt;1\)은 더 작은 커뮤니티를, \(\gamma&lt;1\)은 더 큰 커뮤니티를 선호합니다. 하지만 분명히 옳은 값이 있는 경우는 드뭅니다.</p>
+  </div>
+  <figure class="bench">
+    <label class="slider"><span>고리의 클리크 수</span> <input type="range" id="rlN" min="4" max="40" step="2" value="16"> <output id="rlNo">16</output></label>
+    <label class="slider"><span>클리크당 노드 수</span> <input type="range" id="rlM" min="3" max="6" value="4"> <output id="rlMo">4</output></label>
+    <label class="slider"><span>분해능 γ</span> <input type="range" id="rlG" min="0.5" max="3" step="0.05" value="1"> <output id="rlGo">1.00</output></label>
+    <div class="controls"><span><span style="font-size:14px;color:var(--muted)">보기</span></span><div class="seg" role="group" aria-label="보여 줄 분할"><button type="button" data-rl="single">클리크마다 하나</button><button type="button" data-rl="pair">둘씩</button><button type="button" data-rl="louvain" aria-pressed="true">루뱅의 답</button></div></div>
+    <div id="rlNet"></div>
+    <div class="readout" id="rlRead"></div>
+    <p class="ann" id="rlAnn" aria-live="polite"></p>
+  </figure>
+</section>
+
+<section class="chapter" id="sbm" data-ch="9">
+  <header><h2><span class="n">10</span>확률적 블록 모형 <small>SBM</small></h2></header>
+  <div class="prose">
+    <p>노드 \(N\)개를 \(q\)개의 무리로 나눕니다. 노드 \(i\)와 \(j\)가 연결될 확률은 그 무리에만 의존합니다: \(P(i\leftrightarrow j)=p_{g_ig_j}\). 이 확률들의 \(q\times q\) 행렬이 <b>확률적 블록 행렬</b>입니다.</p>
+    <p>이 모형은 여러 종류의 무리 구조를 만들 수 있습니다:</p>
+    <ul>
+      <li>\(p_{rr}&gt;p_{rs}\): 커뮤니티 구조</li>
+      <li>\(p_{rr}&lt;p_{rs}\): 이류적 구조. \(p_{rr}=0\)이면 다분 네트워크</li>
+      <li>\(p_{11}\gg p_{12}\gg p_{22}\): 핵–주변부</li>
+      <li>모두 같음: 고전적인 무작위 그래프로, 무리 구조가 전혀 없음</li>
+    </ul>
+    <p>커뮤니티를 찾으려면 모형을 맞춥니다: 주어진 분할에 대해 SBM이 관찰된 링크를 재현할 가능도를 최대화합니다. 연결선수 보정판(DCSBM)은 다음을 최대화합니다</p>
+    <div class="math">\[ \mathcal{L}(G\,|\,g)=\sum_{r,s=1}^{q}L_{rs}\log\left(\frac{L_{rs}}{k_rk_s}\right) \]</div>
+    <p>Newman(2016)은 분해능 \(\gamma=\frac{\omega_{in}-\omega_{out}}{\log\omega_{in}-\log\omega_{out}}\)의 모듈성 최대화가 심어 둔 분할 DCSBM의 최대 가능도 맞춤과 동등함을 보였습니다.</p>
+    <div class="code" tabindex="0" role="region" aria-label="파이썬 코드">G = nx.generators.stochastic_block_model(sizes, P)</div>
+  </div>
+  <figure class="bench">
+    <p class="how">블록 행렬의 칸을 클릭한 다음 그 확률을 정하세요.</p>
+    <div class="controls"><div class="seg" role="group" aria-label="SBM 미리 설정"><button type="button" data-sb="comm" aria-pressed="true">커뮤니티</button><button type="button" data-sb="cp">핵–주변부</button><button type="button" data-sb="bip">이류적</button><button type="button" data-sb="rand">무작위</button></div><button type="button" id="sbNew">새 표본</button></div>
+    <div class="two">
+      <div><svg id="sbMatrix" class="matrix" viewBox="0 0 220 220" role="group" aria-label="블록 확률 행렬"></svg>
+        <label class="slider" style="margin-top:8px"><span id="sbCellName">p</span> <input type="range" id="sbP" min="0" max="0.6" step="0.01"> <output id="sbPo"></output></label></div>
+      <div><svg id="sbAdj" viewBox="0 0 220 220" role="img" aria-label="표본의 인접 행렬"></svg><p class="cap">무리 순으로 정렬한 인접 행렬 A</p></div>
+    </div>
+    <div id="sbNet"></div>
+    <div class="readout" id="sbRead"></div>
+  </figure>
+</section>
+
+<section class="chapter" id="bench" data-ch="10">
+  <header><h2><span class="n">11</span>벤치마크 <small>방법이 맞혔을까?</small></h2></header>
+  <div class="prose">
+    <p><b>인공 벤치마크</b>는 알려진 답을 심어 둡니다. 심어 둔 분할 모형, 즉 \(p_{rr}=p_{in}\), \(p_{rs}=p_{out}\)인 SBM에서 \(q\)개의 무리는 모두 크기가 \(N/q\)이고</p>
+    <div class="math">\[ \langle k^{int}\rangle=p_{in}\!\left(\tfrac Nq-1\right),\quad \langle k^{ext}\rangle=p_{out}\tfrac Nq(q-1) \]</div>
+    <p><b>GN 벤치마크</b>는 \(N=128\), \(q=4\), \(\langle k\rangle=16\)으로 고정하므로 \(31p_{in}+96p_{out}=16\)입니다. \(\langle k^{ext}\rangle\)가 커지면 무리가 녹아 버리며, \(\langle k^{ext}\rangle=12\)에서는 모든 노드가 다른 각 무리와 자기 무리에 같은 수의 링크를 가집니다.</p>
+    <p>실제 네트워크와 달리 그 노드들은 모두 연결선수가 거의 같고 커뮤니티 크기도 같습니다. <b>LFR 벤치마크</b>는 연결선수와 커뮤니티 크기에 꼬리가 두꺼운 분포를 더하며, 지금은 표준 시험입니다.</p>
+    <p><b>실제 벤치마크</b>는 알려진 무리와 함께 옵니다: 재커리 가라테 클럽(이제는 좀 지나치게 유명함), 전력망, 스타워즈 인물 네트워크 등입니다.</p>
+    <h3>분할 비교하기</h3>
+    <div class="math">\[ \mathrm{NMI}(X,Y)=\frac{2H(X)-2H(X|Y)}{H(X)+H(Y)} \]</div>
+    <p>NMI는 두 분할이 같으면 1이고, 서로 독립이면 약 0입니다.</p>
+  </div>
+  <figure class="bench">
+    <label class="slider"><span>⟨k<sup>ext</sup>⟩</span> <input type="range" id="bmK" min="0" max="12" step="0.5" value="5"> <output id="bmKo">5.0</output></label>
+    <div class="controls"><button type="button" id="bmNew">새 표본</button><button type="button" class="primary" id="bmSweep">⟨k<sup>ext</sup>⟩를 0에서 12까지 훑기</button></div>
+    <div id="bmNet"></div>
+    <p class="cap">채움: 루뱅이 찾은 커뮤니티. 테두리: 심어 둔 무리.</p>
+    <div class="readout" id="bmRead"></div>
+    <svg class="chart" id="bmChart" viewBox="0 0 560 200" role="img" aria-label="외부 연결선수에 따른 NMI"></svg>
+    <p class="log" id="bmLog"></p>
+  </figure>
+</section>
+
+<footer>
+  <p class="closing">정답을 안다면 NMI는 중요한 성능 지표입니다. 그런데 정답을 안다면, 애초에 왜 이걸 하고 있을까요?</p>
+  <p>커뮤니티 찾기의 궁극적인 딜레마.</p>
+  <p>이상훈 교수의 강의 슬라이드 “Mesoscale properties of networks: communities”를 바탕으로 Claude Opus 5.5가 만들었습니다. 강의의 그림은 Menczer, Fortunato &amp; Davis, <i>A First Course in Network Science</i>를 따릅니다. Porter, Onnela &amp; Mucha (2009), Fortunato (2010), Fortunato &amp; Newman (2022)의 리뷰도 참고하세요.</p>
+</footer>
+
+</main>
+<script>
+/* ---------- core graph library ---------- */
+function mulberry(a){a=a>>>0;return function(){a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(arr,rand){for(let i=arr.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+
+class Graph{
+  constructor(n,edges){
+    this.n=n;this.edges=edges.map(e=>[e[0],e[1]]);
+    this.adj=Array.from({length:n},()=>[]);
+    for(const [a,b] of this.edges){this.adj[a].push(b);this.adj[b].push(a)}
+    this.L=this.edges.length;
+  }
+  deg(i){return this.adj[i].length}
+  has(a,b){return this.adj[a].includes(b)}
+}
+
+/* relabel a partition to 0..k-1, ordered by community size (largest first) */
+function canon(part){
+  const cnt=new Map();for(const c of part)cnt.set(c,(cnt.get(c)||0)+1);
+  const firstSeen=new Map();part.forEach((c,i)=>{if(!firstSeen.has(c))firstSeen.set(c,i)});
+  const keys=[...cnt.keys()].sort((a,b)=>cnt.get(b)-cnt.get(a)||firstSeen.get(a)-firstSeen.get(b));
+  const map=new Map(keys.map((k,i)=>[k,i]));
+  return part.map(c=>map.get(c));
+}
+function numComms(part){return new Set(part).size}
+
+/* modularity Q = sum_c [ L_c/L - gamma (k_c/2L)^2 ] */
+function modularity(G,part,gamma=1){
+  if(G.L===0)return 0;
+  const Lc=new Map(),kc=new Map();
+  for(const [a,b] of G.edges){if(part[a]===part[b])Lc.set(part[a],(Lc.get(part[a])||0)+1)}
+  for(let i=0;i<G.n;i++)kc.set(part[i],(kc.get(part[i])||0)+G.deg(i));
+  let Q=0;const L=G.L;
+  for(const [c,k] of kc){Q+=(Lc.get(c)||0)/L-gamma*(k/(2*L))**2}
+  return Q;
+}
+function commStats(G,part,gamma=1){
+  const L=G.L,out=new Map();
+  const get=c=>{if(!out.has(c))out.set(c,{c,N:0,Lc:0,kc:0,nodes:[]});return out.get(c)};
+  for(let i=0;i<G.n;i++){const s=get(part[i]);s.N++;s.kc+=G.deg(i);s.nodes.push(i)}
+  for(const [a,b] of G.edges)if(part[a]===part[b])get(part[a]).Lc++;
+  for(const s of out.values()){s.contrib=s.Lc/L-gamma*(s.kc/(2*L))**2}
+  return [...out.values()].sort((a,b)=>a.c-b.c);
+}
+/* partition-based ("less stringent") strong & weak tests */
+function strongWeak(G,part){
+  const res=new Map();
+  const comms=[...new Set(part)];
+  for(const c of comms){
+    let strong=true,sumInt=0;const sumExtTo=new Map();
+    for(let i=0;i<G.n;i++){
+      if(part[i]!==c)continue;
+      const cnt=new Map();
+      for(const j of G.adj[i])cnt.set(part[j],(cnt.get(part[j])||0)+1);
+      const kin=cnt.get(c)||0;sumInt+=kin;
+      for(const [d,v] of cnt){if(d===c)continue;if(v>=kin)strong=false;sumExtTo.set(d,(sumExtTo.get(d)||0)+v)}
+    }
+    let weak=true;for(const v of sumExtTo.values())if(v>=sumInt)weak=false;
+    res.set(c,{strong,weak});
+  }
+  return res;
+}
+
+function components(n,adj,alive){ // alive(edgeKey) optional
+  const comp=new Array(n).fill(-1);let k=0;
+  for(let s=0;s<n;s++){if(comp[s]>=0)continue;const st=[s];comp[s]=k;
+    while(st.length){const u=st.pop();for(const v of adj[u]){if(comp[v]<0&&(!alive||alive(u,v))){comp[v]=k;st.push(v)}}}k++}
+  return comp;
+}
+
+/* Brandes edge betweenness on the subgraph of alive edges */
+function edgeBetweenness(n,edges,aliveMask){
+  const adj=Array.from({length:n},()=>[]);
+  edges.forEach(([a,b],e)=>{if(aliveMask[e]){adj[a].push([b,e]);adj[b].push([a,e])}});
+  const eb=new Float64Array(edges.length);
+  for(let s=0;s<n;s++){
+    const S=[],P=Array.from({length:n},()=>[]),sigma=new Float64Array(n),d=new Int32Array(n).fill(-1);
+    sigma[s]=1;d[s]=0;const Qu=[s];let h=0;
+    while(h<Qu.length){const v=Qu[h++];S.push(v);for(const [w,e] of adj[v]){if(d[w]<0){d[w]=d[v]+1;Qu.push(w)}if(d[w]===d[v]+1){sigma[w]+=sigma[v];P[w].push([v,e])}}}
+    const delta=new Float64Array(n);
+    while(S.length){const w=S.pop();for(const [v,e] of P[w]){const c=sigma[v]/sigma[w]*(1+delta[w]);eb[e]+=c;delta[v]+=c}}
+  }
+  for(let e=0;e<eb.length;e++)eb[e]/=2;
+  return eb;
+}
+
+/* Jaccard similarity of neighborhoods (structural equivalence, Eq. 6.3) */
+function jaccard(G,i,j){
+  const A=new Set(G.adj[i].filter(x=>x!==j)),B=new Set(G.adj[j].filter(x=>x!==i));
+  let inter=0;for(const x of A)if(B.has(x))inter++;
+  const uni=A.size+B.size-inter;return {inter,uni,s:uni?inter/uni:0};
+}
+/* agglomerative clustering -> merges [{a,b,h,id}] ; leaves 0..n-1, internal n.. */
+function agglomerate(G,linkage){
+  const n=G.n,S=[];for(let i=0;i<n;i++){S.push([]);for(let j=0;j<n;j++)S[i].push(i===j?1:jaccard(G,i,j).s)}
+  let clusters=[];for(let i=0;i<n;i++)clusters.push({id:i,members:[i]});
+  const merges=[];let next=n;
+  const sim=(A,B)=>{let mx=-1,mn=2,sum=0;for(const a of A.members)for(const b of B.members){const v=S[a][b];if(v>mx)mx=v;if(v<mn)mn=v;sum+=v}
+    return linkage==='single'?mx:linkage==='complete'?mn:sum/(A.members.length*B.members.length)};
+  while(clusters.length>1){
+    let best=-1,bi=0,bj=1;
+    for(let i=0;i<clusters.length;i++)for(let j=i+1;j<clusters.length;j++){const v=sim(clusters[i],clusters[j]);if(v>best+1e-12){best=v;bi=i;bj=j}}
+    const A=clusters[bi],B=clusters[bj];
+    const C={id:next++,members:A.members.concat(B.members)};
+    merges.push({a:A.id,b:B.id,h:best,id:C.id});
+    clusters=clusters.filter((_,k)=>k!==bi&&k!==bj);clusters.push(C);
+  }
+  return merges;
+}
+function cutDendrogram(n,merges,t){
+  const parent=Array.from({length:n},(_,i)=>i);
+  const find=x=>{while(parent[x]!==x){parent[x]=parent[parent[x]];x=parent[x]}return x};
+  const rep=new Map();for(let i=0;i<n;i++)rep.set(i,i);
+  for(const m of merges){const ra=rep.get(m.a),rb=rep.get(m.b);if(m.h>=t){parent[find(ra)]=find(rb)}rep.set(m.id,ra)}
+  return canon(Array.from({length:n},(_,i)=>find(i)));
+}
+
+/* Kernighan–Lin single pass. returns {swaps:[[a,b],...] kept, gain} */
+function cutSize(G,side){let c=0;for(const [a,b] of G.edges)if(side[a]!==side[b])c++;return c}
+function klPass(G,side){
+  const n=G.n,cur=side.slice(),locked=new Array(n).fill(false),seq=[],gains=[];
+  const D=()=>{const d=new Array(n).fill(0);for(let v=0;v<n;v++)for(const u of G.adj[v])d[v]+=cur[u]!==cur[v]?1:-1;return d};
+  const half=Math.floor(n/2);
+  for(let step=0;step<half;step++){
+    const d=D();let best=-Infinity,ba=-1,bb=-1;
+    for(let a=0;a<n;a++){if(locked[a]||cur[a]!==0)continue;for(let b=0;b<n;b++){if(locked[b]||cur[b]!==1)continue;
+      const g=d[a]+d[b]-2*(G.has(a,b)?1:0);if(g>best){best=g;ba=a;bb=b}}}
+    if(ba<0)break;cur[ba]=1;cur[bb]=0;locked[ba]=locked[bb]=true;seq.push([ba,bb]);gains.push(best);
+  }
+  let cum=0,bestCum=0,k=0;gains.forEach((g,i)=>{cum+=g;if(cum>bestCum){bestCum=cum;k=i+1}});
+  return {swaps:seq.slice(0,k),gain:bestCum};
+}
+
+/* ---------- Louvain as a step-wise generator ---------- */
+function* louvainSteps(G,gamma=1,seed=1){
+  const rand=mulberry(seed);
+  // level graph: nbrs[i]: Map(j->w), self[i]
+  let n=G.n,nbrs=Array.from({length:n},()=>new Map()),self=new Float64Array(n);
+  for(const [a,b] of G.edges){nbrs[a].set(b,(nbrs[a].get(b)||0)+1);nbrs[b].set(a,(nbrs[b].get(a)||0)+1)}
+  const m=G.L;
+  let member=Array.from({length:G.n},(_,i)=>i); // original node -> level node
+  let level=0;
+  while(true){
+    const k=new Float64Array(n);for(let i=0;i<n;i++){let s=2*self[i];for(const w of nbrs[i].values())s+=w;k[i]=s}
+    const comm=Array.from({length:n},(_,i)=>i),tot=Float64Array.from(k);
+    let movedAny=false,improved=true;
+    while(improved){
+      improved=false;
+      const order=shuffle(Array.from({length:n},(_,i)=>i),rand);
+      for(const i of order){
+        const ci=comm[i];const kin=new Map();
+        for(const [j,w] of nbrs[i]){kin.set(comm[j],(kin.get(comm[j])||0)+w)}
+        tot[ci]-=k[i];
+        let best=ci,bestGain=(kin.get(ci)||0)-gamma*tot[ci]*k[i]/(2*m);
+        for(const [c,w] of kin){if(c===ci)continue;const g=w-gamma*tot[c]*k[i]/(2*m);if(g>bestGain+1e-10){bestGain=g;best=c}}
+        tot[best]+=k[i];
+        if(best!==ci){comm[i]=best;improved=true;movedAny=true;
+          const part=member.map(v=>comm[v]);
+          yield {type:'move',level,node:i,from:ci,to:best,part,origNodes:member.map((v,o)=>v===i?o:-1).filter(o=>o>=0)}}
+      }
+    }
+    const part=member.map(v=>comm[v]);
+    yield {type:'phaseEnd',level,part};
+    if(!movedAny){yield {type:'done',part:canon(part)};return}
+    // aggregate
+    const ids=new Map();for(const c of comm)if(!ids.has(c))ids.set(c,ids.size);
+    const nn=ids.size,nn_nbrs=Array.from({length:nn},()=>new Map()),nself=new Float64Array(nn),sizes=new Array(nn).fill(0);
+    for(let i=0;i<n;i++){const a=ids.get(comm[i]);nself[a]+=self[i];
+      for(const [j,w] of nbrs[i]){const b=ids.get(comm[j]);if(a===b){if(j>i)nself[a]+=w}else nn_nbrs[a].set(b,(nn_nbrs[a].get(b)||0)+w)}}
+    member=member.map(v=>ids.get(comm[v]));
+    for(const v of member)sizes[v]++;
+    n=nn;nbrs=nn_nbrs;self=nself;level++;
+    const sedges=[];for(let a=0;a<n;a++)for(const [b,w] of nbrs[a])if(b>a)sedges.push([a,b,w]);
+    yield {type:'aggregate',level,n,self:[...self],edges:sedges,sizes,part:member.slice()};
+  }
+}
+function louvain(G,gamma=1,seed=1){let last;for(const ev of louvainSteps(G,gamma,seed))last=ev;return last.part}
+
+/* greedy modularity (Clauset–Newman–Moore style, plain O(n^3) for small graphs) */
+function greedyModularity(G){
+  let part=Array.from({length:G.n},(_,i)=>i);let Q=modularity(G,part);
+  while(true){
+    const comms=[...new Set(part)];let best=null,bq=Q;
+    const linked=new Set();for(const [a,b] of G.edges)if(part[a]!==part[b])linked.add(Math.min(part[a],part[b])+','+Math.max(part[a],part[b]));
+    for(const key of linked){const [x,y]=key.split(',').map(Number);const p=part.map(c=>c===y?x:c);const q=modularity(G,p);if(q>bq+1e-12){bq=q;best=p}}
+    if(!best)break;part=best;Q=bq;
+  }
+  return canon(part);
+}
+
+/* normalized mutual information, Eq. 6.9 */
+function nmi(X,Y){
+  const N=X.length,cx=new Map(),cy=new Map(),cxy=new Map();
+  for(let i=0;i<N;i++){cx.set(X[i],(cx.get(X[i])||0)+1);cy.set(Y[i],(cy.get(Y[i])||0)+1);const k=X[i]+'|'+Y[i];cxy.set(k,(cxy.get(k)||0)+1)}
+  const H=c=>{let h=0;for(const v of c.values()){const p=v/N;h-=p*Math.log(p)}return h};
+  const HX=H(cx),HY=H(cy);let I=0;
+  for(const [k,v] of cxy){const [x,y]=k.split('|');const pxy=v/N;I+=pxy*Math.log(pxy/((cx.get(+x)/N)*(cy.get(+y)/N)))}
+  if(HX+HY===0)return 1;return 2*I/(HX+HY);
+}
+
+/* SBM sampler */
+function sbm(sizes,P,seed){
+  const rand=mulberry(seed),g=[];sizes.forEach((s,r)=>{for(let i=0;i<s;i++)g.push(r)});
+  const n=g.length,edges=[];
+  for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)if(rand()<P[g[i]][g[j]])edges.push([i,j]);
+  return {G:new Graph(n,edges),groups:g};
+}
+/* degree-preserving randomization by double edge swaps */
+function rewire(G,seed,swaps){
+  const rand=mulberry(seed),E=G.edges.map(e=>e.slice());const key=(a,b)=>a<b?a+','+b:b+','+a;
+  const set=new Set(E.map(([a,b])=>key(a,b)));let done=0,tries=0;
+  while(done<swaps&&tries<swaps*50){tries++;
+    const i=Math.floor(rand()*E.length),j=Math.floor(rand()*E.length);if(i===j)continue;
+    let [a,b]=E[i],[c,d]=E[j];if(rand()<.5)[c,d]=[d,c];
+    if(a===d||c===b||a===c||b===d)continue;if(set.has(key(a,d))||set.has(key(c,b)))continue;
+    set.delete(key(a,b));set.delete(key(c,d));set.add(key(a,d));set.add(key(c,b));E[i]=[a,d];E[j]=[c,b];done++}
+  return new Graph(G.n,E);
+}
+
+/* Fruchterman–Reingold layout -> positions in [0,1]^2 */
+// layouts are deterministic for a given graph and seed, so they are cached; an iteration loop also stops once nothing moves
+const layoutCache=new Map();
+function layout(G,opt={}){
+  const key=[opt.seed,opt.iters,opt.gravity,opt.groups?opt.groups.join(','):'',G.n,G.edges.map(e=>e[0]+'-'+e[1]).join(',')].join('|');
+  if(!layoutCache.has(key)){if(layoutCache.size>40)layoutCache.delete(layoutCache.keys().next().value);layoutCache.set(key,layoutRun(G,opt));}
+  return layoutCache.get(key).map(p=>p.slice());
+}
+function layoutRun(G,{seed=1,iters=350,gravity=0.06,groups=null}={}){
+  const n=G.n,rand=mulberry(seed);const x=new Float64Array(n),y=new Float64Array(n);
+  for(let i=0;i<n;i++){
+    if(groups){const q=Math.max(...groups)+1,ang=2*Math.PI*groups[i]/q;x[i]=.5+.25*Math.cos(ang)+(rand()-.5)*.2;y[i]=.5+.25*Math.sin(ang)+(rand()-.5)*.2}
+    else{x[i]=rand();y[i]=rand()}}
+  const k=Math.sqrt(1/n)*0.9;let t=0.1;
+  const dx=new Float64Array(n),dy=new Float64Array(n);
+  for(let it=0;it<iters;it++){
+    dx.fill(0);dy.fill(0);let mv=0;
+    for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){let ex=x[i]-x[j],ey=y[i]-y[j];let d2=ex*ex+ey*ey+1e-6;const f=k*k/d2;dx[i]+=ex*f;dy[i]+=ey*f;dx[j]-=ex*f;dy[j]-=ey*f}
+    for(const [a,b] of G.edges){const ex=x[a]-x[b],ey=y[a]-y[b];const d=Math.sqrt(ex*ex+ey*ey)+1e-9;const f=d/k;dx[a]-=ex*f;dy[a]-=ey*f;dx[b]+=ex*f;dy[b]+=ey*f}
+    for(let i=0;i<n;i++){dx[i]-=(x[i]-.5)*gravity*n*0.3;dy[i]-=(y[i]-.5)*gravity*n*0.3;
+      const d=Math.sqrt(dx[i]*dx[i]+dy[i]*dy[i])+1e-9;const s=Math.min(d,t)/d;x[i]+=dx[i]*s;y[i]+=dy[i]*s;mv=Math.max(mv,Math.min(d,t))}
+    t=Math.max(0.002,t*0.985);
+    if(mv<1e-6)break;
+  }
+  let mnx=Infinity,mxx=-Infinity,mny=Infinity,mxy=-Infinity;for(let i=0;i<n;i++){mnx=Math.min(mnx,x[i]);mxx=Math.max(mxx,x[i]);mny=Math.min(mny,y[i]);mxy=Math.max(mxy,y[i])}
+  const sx=mxx-mnx||1,sy=mxy-mny||1;
+  return Array.from({length:n},(_,i)=>[(x[i]-mnx)/sx,(y[i]-mny)/sy]);
+}
+
+function bell(N){ // BigInt Bell numbers via Bell triangle
+  let row=[1n];const out=[1n];
+  for(let i=1;i<=N;i++){const nr=[row[row.length-1]];for(const v of row)nr.push(nr[nr.length-1]+v);row=nr;out.push(row[0])}
+  return out;
+}
+if(typeof module!=='undefined')module.exports={mulberry,Graph,canon,modularity,commStats,strongWeak,components,edgeBetweenness,jaccard,agglomerate,cutDendrogram,cutSize,klPass,louvainSteps,louvain,greedyModularity,nmi,sbm,rewire,layout,bell,numComms};
+
+</script>
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+const col=k=>`var(--c${((k%8)+8)%8})`;
+const fmt=(x,d=3)=>(Math.abs(x)<5e-10?0:x).toFixed(d);
+function colorsFor(part){const p=canon(part);const sz=new Map();p.forEach(c=>sz.set(c,(sz.get(c)||0)+1));let k=0;const m=new Map();
+  return p.map(c=>{if(sz.get(c)===1)return 'var(--none)';if(!m.has(c))m.set(c,k++);return col(m.get(c))})}
+function readout(host,items){host.innerHTML=items.map(([l,v])=>`<div><b>${v}</b>${l}</div>`).join('')}
+function pressGroup(btns,active){btns.forEach(b=>b.setAttribute('aria-pressed',b===active?'true':'false'))}
+
+/* ---------- network view ---------- */
+class NetView{
+  constructor(host,{W=600,H=420,pad=22,r=7,labels=false,click=false,label=''}={}){
+    Object.assign(this,{W,H,pad,r,labels,click});
+    this.svg=el('svg',{viewBox:`0 0 ${W} ${H}`,class:'net',role:click?'group':'img','aria-label':label});host.appendChild(this.svg);
+    this.gE=el('g',null,this.svg);this.gO=el('g',null,this.svg);this.gN=el('g',null,this.svg);
+    this.onClick=null;this.onHover=null;
+  }
+  P(p){return [this.pad+p[0]*(this.W-2*this.pad),this.pad+p[1]*(this.H-2*this.pad)]}
+  set(G,pos){
+    this.G=G;this.pos=pos;this.gE.textContent='';this.gN.textContent='';
+    this.lines=G.edges.map(([a,b])=>{const [x1,y1]=this.P(pos[a]),[x2,y2]=this.P(pos[b]);return el('line',{x1,y1,x2,y2,class:'edge'},this.gE)});
+    this.nodes=pos.map((p,i)=>{
+      const [cx,cy]=this.P(p);
+      const g=el('g',{class:'node'+(this.click?' click':''),transform:`translate(${cx.toFixed(1)},${cy.toFixed(1)})`},this.gN);
+      if(this.click){g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label','node '+i)}
+      const c=el('circle',{r:this.r},g);
+      if(this.labels){const t=el('text',{class:'nlabel','text-anchor':'middle',dy:'0.35em'},g);t.textContent=i}
+      g.addEventListener('click',()=>this.onClick&&this.onClick(i));
+      g.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&this.onClick){e.preventDefault();this.onClick(i)}});
+      g.addEventListener('pointerenter',()=>this.onHover&&this.onHover(i));
+      g.addEventListener('pointerleave',()=>this.onHover&&this.onHover(null));
+      g.addEventListener('focus',()=>this.onHover&&this.onHover(i));
+      g.addEventListener('blur',()=>this.onHover&&this.onHover(null));
+      return {g,c};
+    });
+  }
+  move(pos){this.pos=pos;pos.forEach((p,i)=>{const [x,y]=this.P(p);this.nodes[i].g.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`)});
+    this.G.edges.forEach(([a,b],e)=>{const [x1,y1]=this.P(pos[a]),[x2,y2]=this.P(pos[b]);const l=this.lines[e];l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2)})}
+  fill(arr){this.nodes.forEach((n,i)=>{n.c.style.fill=arr[i]})}
+  sel(set){this.nodes.forEach((n,i)=>n.g.classList.toggle('sel',set.has(i)))}
+}
+
+/* ---------- charts ---------- */
+function lineChart(svg,{series,xmin,xmax,ymin,ymax,xlab,ylab,markX=null,points=false,W=560,H=200}){
+  svg.textContent='';const l=46,r=14,t=12,b=34;
+  const X=x=>l+(x-xmin)/(xmax-xmin)*(W-l-r),Y=y=>H-b-(y-ymin)/(ymax-ymin)*(H-t-b);
+  el('line',{x1:l,y1:H-b,x2:W-r,y2:H-b,class:'axis'},svg);el('line',{x1:l,y1:t,x2:l,y2:H-b,class:'axis'},svg);
+  const yt=[ymin,(ymin+ymax)/2,ymax];yt.forEach(v=>{const tx=el('text',{x:l-6,y:Y(v)+4,'text-anchor':'end'},svg);tx.textContent=Math.abs(v)>=1000?v.toExponential(0):+v.toFixed(2)});
+  const xt=5;for(let k=0;k<=xt;k++){const v=xmin+(xmax-xmin)*k/xt;const tx=el('text',{x:X(v),y:H-b+15,'text-anchor':'middle'},svg);tx.textContent=+v.toFixed(1)}
+  const xl=el('text',{x:(l+W-r)/2,y:H-3,'text-anchor':'middle'},svg);xl.textContent=xlab;
+  const yl=el('text',{x:12,y:(t+H-b)/2,'text-anchor':'middle',transform:`rotate(-90 12 ${(t+H-b)/2})`},svg);yl.textContent=ylab;
+  for(const s of series){if(!s.pts.length)continue;
+    el('path',{d:s.pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(''),fill:'none',stroke:s.color||'var(--ink)','stroke-width':2},svg);
+    if(points)s.pts.forEach(p=>el('circle',{cx:X(p[0]),cy:Y(p[1]),r:3,fill:s.color||'var(--ink)'},svg))}
+  if(markX!==null){el('line',{x1:X(markX),x2:X(markX),y1:t,y2:H-b,stroke:'var(--marker)','stroke-width':1.5,'stroke-dasharray':'4 3'},svg)}
+  return {X,Y};
+}
+
+/* ---------- data ---------- */
+const KE=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,10],[0,11],[0,12],[0,13],[0,17],[0,19],[0,21],[0,31],[1,2],[1,3],[1,7],[1,13],[1,17],[1,19],[1,21],[1,30],[2,3],[2,7],[2,8],[2,9],[2,13],[2,27],[2,28],[2,32],[3,7],[3,12],[3,13],[4,6],[4,10],[5,6],[5,10],[5,16],[6,16],[8,30],[8,32],[8,33],[9,33],[13,33],[14,32],[14,33],[15,32],[15,33],[18,32],[18,33],[19,33],[20,32],[20,33],[22,32],[22,33],[23,25],[23,27],[23,29],[23,32],[23,33],[24,25],[24,27],[24,31],[25,31],[26,29],[26,33],[27,33],[28,31],[28,33],[29,32],[29,33],[30,32],[30,33],[31,32],[31,33],[32,33]];
+const KARATE=new Graph(34,KE);
+const CLUB=[0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1];
+const KPOS=layout(KARATE,{seed:7,iters:500,gravity:0.05});
+
+const HE=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[4,5],[4,6],[5,6],[3,6],
+  [7,8],[7,9],[8,9],[8,10],[9,10],[9,11],[10,11],[10,12],[11,12],[7,10],
+  [13,14],[13,15],[14,15],[14,16],[15,16],[15,17],[16,17],[16,18],[17,18],[13,16],
+  [5,7],[6,13],[6,9],[12,14],[11,17],[18,11],[18,12]];
+const HG=new Graph(19,HE);
+const HGROUP=Array.from({length:19},(_,i)=>i<7?0:i<13?1:2);
+const HPOS=layout(HG,{seed:3,iters:500,gravity:0.05});
+
+/* ---------- TOC highlight ---------- */
+(function(){const links=[...document.querySelectorAll('.toc a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);links.forEach((a,k)=>a.classList.toggle('on',k===i))}})},{rootMargin:'-35% 0px -60% 0px'});
+  secs.forEach(s=>s&&io.observe(s));})();
+
+/* ---------- 1. hero ---------- */
+(function(){
+  const v=new NetView($('heroNet'),{W:620,H:460,r:11,label:'커뮤니티가 셋인 네트워크'});
+  let target=HPOS,colored=false;v.set(HG,HPOS);v.fill(HG.adj.map(()=> 'var(--ink)'));
+  v.lines.forEach(l=>l.style.strokeWidth=1.8);
+  function animateTo(from,to){
+    if(reduceMotion){v.move(to);return}
+    const t0=performance.now(),D=1400;
+    const step=now=>{const u=Math.min(1,(now-t0)/D),e=1-Math.pow(1-u,3);
+      v.move(from.map((p,i)=>[p[0]+(to[i][0]-p[0])*e,p[1]+(to[i][1]-p[1])*e]));if(u<1)requestAnimationFrame(step)};
+    requestAnimationFrame(step);
+  }
+  const rnd=mulberry(11);const start=HPOS.map(()=>[rnd(),rnd()]);v.move(start);animateTo(start,HPOS);
+  $('heroColor').onclick=()=>{colored=!colored;$('heroColor').setAttribute('aria-pressed',colored);$('heroColor').textContent=colored?'색 숨기기':'커뮤니티 색칠하기';
+    v.fill(colored?HGROUP.map(col):HG.adj.map(()=> 'var(--ink)'))};
+  let seed=20;$('heroShake').onclick=()=>{seed++;const nxt=layout(HG,{seed,iters:500,gravity:0.05});animateTo(v.pos,nxt)};
+})();
+
+/* ---------- 2. inside a community ---------- */
+(function(){
+  const v=new NetView($('inNet'),{W:600,H:420,r:10,click:true,label:'커뮤니티 만들기'});v.set(HG,HPOS);
+  let C=new Set([0,1,2,3,4,5,6]),hover=null;
+  const presets=[...document.querySelectorAll('[data-pre]')];
+  presets.forEach(b=>b.onclick=()=>{const p=b.dataset.pre;C=p==='x'?new Set():new Set(HGROUP.map((g,i)=>g===+p?i:-1).filter(i=>i>=0));pressGroup(presets,b);upd()});
+  pressGroup(presets,presets[0]);
+  v.onClick=i=>{C.has(i)?C.delete(i):C.add(i);pressGroup(presets,null);upd()};
+  v.onHover=i=>{hover=i;ann()};
+  const kin=i=>HG.adj[i].filter(j=>C.has(j)).length;
+  function ann(){
+    const a=$('inAnn');if(hover===null){a.textContent=C.size?'노드에 마우스를 올리면 내부·외부 연결선수가 보입니다.':'C가 비어 있습니다. 노드를 클릭해 보세요.';return}
+    const ki=kin(hover),k=HG.deg(hover);
+    a.textContent=C.has(hover)?`노드 ${hover}: k_int = ${ki}, k_ext = ${k-ki}, k = ${k}`+(ki>k-ki?'':'  ← 강한 조건을 깸'):`노드 ${hover}는 C 밖에 있고, C로 가는 링크가 ${ki}개 있습니다`;
+  }
+  function upd(){
+    const nb=new Set();C.forEach(i=>HG.adj[i].forEach(j=>{if(!C.has(j))nb.add(j)}));
+    v.fill(HG.adj.map((_,i)=>C.has(i)?'var(--c2)':nb.has(i)?'var(--magenta)':'var(--none)'));
+    HG.edges.forEach(([a,b],e)=>{const l=v.lines[e],ia=C.has(a),ib=C.has(b);
+      if(ia&&ib){l.style.stroke='var(--edge-strong)';l.style.strokeWidth=2.6;l.style.strokeDasharray=''}
+      else if(ia||ib){l.style.stroke='var(--link)';l.style.strokeWidth=2;l.style.strokeDasharray='5 4'}
+      else{l.style.stroke='var(--edge)';l.style.strokeWidth=1.4;l.style.strokeDasharray=''}});
+    const N=C.size;let sInt=0,sExt=0,kC=0;const bad=[];
+    C.forEach(i=>{const ki=kin(i),ke=HG.deg(i)-ki;sInt+=ki;sExt+=ke;kC+=HG.deg(i);if(!(ki>ke))bad.push(i)});
+    const LC=sInt/2,dens=N>1?2*LC/(N*(N-1)):NaN;
+    readout($('inRead'),[['N_C, 노드 수',N],['L_C, 내부 링크',LC],['δ_C^int, 내부 밀도',isNaN(dens)?'–':dens.toFixed(2)],['k_C, 부피',kC],['Σ k_int',sInt],['Σ k_ext',sExt]]);
+    let connected=false;if(N){const arr=[...C];const seen=new Set([arr[0]]),st=[arr[0]];while(st.length){const u=st.pop();for(const w of HG.adj[u])if(C.has(w)&&!seen.has(w)){seen.add(w);st.push(w)}}connected=seen.size===N}
+    const clique=N>1&&dens===1;
+    const pill=(ok,t)=>`<span class="pill ${ok?'yes':'no'}">${ok?'✓':'✗'} ${t}</span>`;
+    $('inVerdict').innerHTML=N?[pill(connected,'연결됨'),pill(bad.length===0,'강함'+(bad.length?` (노드 ${bad.join(', ')}에서 깨짐)`:'')),pill(sInt>sExt,'약함'),pill(clique,'클리크')].join(''):'';
+    ann();
+  }
+  upd();
+})();
+
+/* ---------- 3. Bell numbers ---------- */
+(function(){
+  const B=bell(60);const s=$('bellN');
+  const svg=$('bellChart');
+  const logs=B.map(b=>b.toString().length-1+Math.log10(Number('0.'+b.toString().slice(0,15))*10));
+  function upd(){const N=+s.value;$('bellNo').textContent=N;const b=B[N];
+    $('bellOut').textContent=b.toLocaleString('en-US');
+    const secs=b/1000000000n;const yrs=secs/31557600n;
+    let t;if(b<1000000000n)t='초당 10억 개의 분할을 확인하면 1초 안에 끝납니다.';
+    else if(yrs<1n){const sec=Number(b)/1e9;t=`초당 10억 개의 분할을 확인하면 약 ${sec<100?sec.toFixed(1):Math.round(sec).toLocaleString('en-US')}초 걸립니다`+(sec>=86400?` (${(sec/86400).toFixed(1)}일).`:'.')}
+    else{const age=yrs/13800000000n;t=`초당 10억 개의 분할을 확인하면 약 ${yrs.toLocaleString('en-US')}년 걸립니다`+(age>=1n?`. 우주 나이의 ${age.toLocaleString('en-US')}배입니다.`:'.')}
+    $('bellAnn').textContent=t;
+    const ys=logs.slice(1);const ymax=Math.ceil(ys[59]/10)*10;
+    const {X,Y}=lineChart(svg,{series:[{pts:ys.map((v,i)=>[i+1,v])}],xmin:1,xmax:60,ymin:0,ymax,xlab:'N',ylab:'log₁₀ B_N',markX:N});
+    el('circle',{cx:X(N),cy:Y(logs[N]),r:5,fill:'var(--marker)'},svg);
+  }
+  s.oninput=upd;upd();
+})();
+
+/* ---------- 4. minimum cut + Kernighan–Lin ---------- */
+(function(){
+  const rnd=mulberry(5),E=[];
+  for(const off of [0,8]){for(let i=0;i<8;i++)E.push([off+i,off+(i+1)%8]);for(let i=0;i<8;i++)for(let j=i+2;j<8;j++){if((i===0&&j===7))continue;if(rnd()<0.33)E.push([off+i,off+j])}}
+  E.push([2,9],[5,12],[7,8],[3,14]);
+  const G=new Graph(16,E);const pos=layout(G,{seed:4,iters:500,gravity:0.04});
+  const v=new NetView($('cutNet'),{W:600,H:360,r:10,click:true,label:'이등분 네트워크'});v.set(G,pos);
+  let side=Array.from({length:16},(_,i)=>i<8?(i%2):(1-i%2)),busy=false;
+  const btns=['cutAll','cutRand','cutKL'].map($);
+  function upd(){
+    v.fill(side.map(s=>s?'var(--c1)':'var(--c0)'));
+    G.edges.forEach(([a,b],e)=>{const l=v.lines[e];if(side[a]!==side[b]){l.style.stroke='var(--marker)';l.style.strokeDasharray='5 4';l.style.strokeWidth=2}else{l.style.stroke='var(--edge)';l.style.strokeDasharray='';l.style.strokeWidth=1.6}});
+    const nA=side.filter(s=>!s).length;
+    readout($('cutRead'),[['자르기 크기',cutSize(G,side)],['|A| 빨강',nA],['|B| 파랑',16-nA],['균형?',Math.abs(16-2*nA)<=1?'예':'아니오']]);
+  }
+  v.onClick=i=>{if(busy)return;side[i]=1-side[i];$('cutLog').textContent='';upd()};
+  const randomBisect=()=>{const idx=Array.from({length:16},(_,i)=>i);for(let i=15;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}side=new Array(16).fill(0);idx.slice(8).forEach(i=>side[i]=1)};
+  $('cutAll').onclick=()=>{side=new Array(16).fill(0);upd();$('cutLog').textContent='자르기 크기 0, 자명한 “최선”의 해. 원하는 것이 아닙니다.'};
+  $('cutRand').onclick=()=>{randomBisect();upd();$('cutLog').textContent='무작위로 균형 잡힌 시작.'};
+  $('cutKL').onclick=async()=>{
+    if(busy)return;busy=true;btns.forEach(b=>b.disabled=true);
+    const nA=side.filter(s=>!s).length;let msgs=[];
+    if(Math.abs(16-2*nA)>1){randomBisect();upd();msgs.push('무작위 이등분에서 시작했습니다.');$('cutLog').textContent=msgs.join(' ');await sleep(600)}
+    for(let pass=1;pass<=8;pass++){
+      const before=cutSize(G,side);const r=klPass(G,side);
+      if(!r.swaps.length){msgs.push(`${pass}단계: 개선하는 앞부분이 없어 멈춤.`);$('cutLog').textContent=msgs.join(' ');break}
+      for(const [a,b] of r.swaps){side[a]=1;side[b]=0;
+        v.sel(new Set([a,b]));upd();await sleep(reduceMotion?0:450)}
+      v.sel(new Set());
+      msgs.push(`${pass}단계: 맞바꾸기 ${r.swaps.length}번, 자르기 ${before} → ${cutSize(G,side)}.`);$('cutLog').textContent=msgs.join(' ');
+      await sleep(reduceMotion?0:500);
+    }
+    busy=false;btns.forEach(b=>b.disabled=false);
+  };
+  upd();
+})();
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+/* ---------- 5. hierarchical clustering ---------- */
+(function(){
+  const v=new NetView($('hierNet'),{W:600,H:400,r:9,labels:true,click:true,label:'계층적 군집화를 위한 가라테 클럽'});v.set(KARATE,KPOS);
+  const dsvg=$('dendro');let linkage='average',merges=agglomerate(KARATE,linkage),pick=[];
+  const lbtns=[...document.querySelectorAll('[data-link]')];
+  lbtns.forEach(b=>b.onclick=()=>{linkage=b.dataset.link;pressGroup(lbtns,b);merges=agglomerate(KARATE,linkage);upd()});
+  v.onClick=i=>{if(pick.length>=2)pick=[];if(pick[0]===i)pick=[];else pick.push(i);simAnn();upd()};
+  function simAnn(){
+    const a=$('hierAnn');if(!pick.length){a.textContent='노드를 하나 고르고, 다른 노드를 고르세요.';return}
+    if(pick.length===1){a.textContent=`노드 ${pick[0]}를 골랐습니다. 이제 다른 노드를 고르세요.`;return}
+    const [i,j]=pick,r=jaccard(KARATE,i,j);
+    a.textContent=`S(${i}, ${j}) = 공통 ${r.inter} / 합집합 ${r.uni} = ${r.s.toFixed(2)}`+(KARATE.has(i,j)?' (둘은 이웃이기도 합니다)':'');
+  }
+  function upd(){
+    const t=+$('hierT').value;$('hierTo').textContent=t.toFixed(2);
+    const part=cutDendrogram(34,merges,t);const fills=colorsFor(part);v.fill(fills);
+    // highlight shared neighbors
+    v.gO.textContent='';
+    if(pick.length===2){const [i,j]=pick;const A=new Set(KARATE.adj[i]);KARATE.adj[j].forEach(k=>{if(A.has(k)&&k!==i&&k!==j){const [x,y]=v.P(KPOS[k]);el('circle',{cx:x,cy:y,r:14,class:'ring'},v.gO)}})}
+    v.sel(new Set(pick));
+    // dendrogram
+    dsvg.textContent='';const W=620,H=240,l=34,r=8,top=10,bot=208;
+    const kids=new Map();merges.forEach(m=>kids.set(m.id,[m.a,m.b,m.h]));
+    const order=[];const walk=id=>{if(id<34){order.push(id);return}const [a,b]=kids.get(id);walk(a);walk(b)};walk(merges[merges.length-1].id);
+    const xs=new Map(),hs=new Map();order.forEach((id,k)=>{xs.set(id,l+(k+.5)*(W-l-r)/34);hs.set(id,1)});
+    const Y=h=>bot-(1-h)*(bot-top);
+    el('line',{x1:l,y1:top,x2:l,y2:bot,class:'axis'},dsvg);
+    [0,.5,1].forEach(h=>{const tx=el('text',{x:l-5,y:Y(h)+4,'text-anchor':'end'},dsvg);tx.textContent=h});
+    for(const m of merges){
+      xs.set(m.id,(xs.get(m.a)+xs.get(m.b))/2);hs.set(m.id,m.h);
+      const c=m.h>=t?fills[firstLeaf(m.id)]:'var(--edge)';
+      el('path',{d:`M${xs.get(m.a)} ${Y(hs.get(m.a))}V${Y(m.h)}H${xs.get(m.b)}V${Y(hs.get(m.b))}`,fill:'none',stroke:c,'stroke-width':m.h>=t?2:1.3},dsvg);
+    }
+    function firstLeaf(id){while(id>=34)id=kids.get(id)[0];return id}
+    order.forEach(id=>{const tx=el('text',{x:xs.get(id),y:bot+14,'text-anchor':'middle'},dsvg);tx.textContent=id;tx.style.fontSize='9px'});
+    el('line',{x1:l,x2:W-r,y1:Y(t),y2:Y(t),stroke:'var(--marker)','stroke-width':1.6,'stroke-dasharray':'6 4'},dsvg);
+    const tl=el('text',{x:W-r,y:Y(t)-5,'text-anchor':'end'},dsvg);tl.textContent='✂ cut';tl.style.fill='var(--marker)';
+    const sizes=new Map();part.forEach(c=>sizes.set(c,(sizes.get(c)||0)+1));
+    readout($('hierRead'),[['군집 수',sizes.size],['노드 둘 이상인 군집',[...sizes.values()].filter(s=>s>1).length],['모듈성 Q',fmt(modularity(KARATE,part))]]);
+  }
+  $('hierT').oninput=upd;
+  $('hierBest').onclick=()=>{let bt=0,bq=-1;for(let t=0;t<=1;t+=0.005){const q=modularity(KARATE,cutDendrogram(34,merges,t));if(q>bq+1e-12){bq=q;bt=t}}$('hierT').value=bt;upd()};
+  upd();
+})();
+
+/* ---------- 6. Girvan–Newman ---------- */
+(function(){
+  const m=KE.length,steps=[];let alive=new Array(m).fill(1);
+  for(let s=0;s<=m;s++){
+    const adj=Array.from({length:34},()=>[]);KE.forEach(([a,b],e)=>{if(alive[e]){adj[a].push(b);adj[b].push(a)}});
+    const comp=components(34,adj);const eb=s<m?edgeBetweenness(34,KE,alive):new Float64Array(m);
+    let top=-1;for(let e=0;e<m;e++)if(alive[e]&&(top<0||eb[e]>eb[top]+1e-9))top=e;
+    steps.push({alive:alive.slice(),comp,eb,top,Q:modularity(KARATE,comp),nc:new Set(comp).size});
+    if(top>=0)alive[top]=0;
+  }
+  let best=0;steps.forEach((s,i)=>{if(s.Q>steps[best].Q)best=i});
+  const v=new NetView($('gnNet'),{W:600,H:400,r:9,labels:true,label:'가라테 클럽에서의 거번–뉴먼'});v.set(KARATE,KPOS);
+  let cur=0;
+  function upd(){
+    const s=steps[cur];let mx=0;s.eb.forEach((x,e)=>{if(s.alive[e]&&x>mx)mx=x});
+    KE.forEach((_,e)=>{const l=v.lines[e];if(!s.alive[e]){l.style.opacity=.18;l.style.strokeDasharray='2 4';l.style.strokeWidth=1;l.style.stroke='var(--edge)';return}
+      l.style.opacity=1;l.style.strokeDasharray='';l.style.strokeWidth=(0.8+5*s.eb[e]/(mx||1)).toFixed(2);l.style.stroke=e===s.top?'var(--marker)':'var(--edge)'});
+    v.fill(colorsFor(s.comp));
+    const te=s.top>=0?KE[s.top]:null;
+    readout($('gnRead'),[['없앤 링크',cur],['연결 덩어리',s.nc],['모듈성 Q',fmt(s.Q)],['다음 차례',te?`${te[0]}–${te[1]}`:'–'],['그 사이 중심도',te?s.eb[s.top].toFixed(1):'–']]);
+    lineChart($('gnChart'),{series:[{pts:steps.map((x,i)=>[i,x.Q])}],xmin:0,xmax:m,ymin:-0.1,ymax:0.5,xlab:'없앤 링크',ylab:'Q',markX:cur});
+    $('gnBack').disabled=cur===0;$('gnStep').disabled=cur===m;
+  }
+  $('gnStep').onclick=()=>{if(cur<m){cur++;upd()}};$('gnBack').onclick=()=>{if(cur>0){cur--;upd()}};
+  $('gnBest').onclick=()=>{cur=best;upd()};$('gnReset').onclick=()=>{cur=0;upd()};
+  upd();
+})();
+
+/* ---------- 7. modularity playground ---------- */
+const LOUVAIN_K=louvain(KARATE,1,1);
+(function(){
+  const v=new NetView($('modNet'),{W:600,H:400,r:9,labels:true,click:true,label:'모듈성 칠하기'});v.set(KARATE,KPOS);
+  const RAND=rewire(KARATE,42,600);let shuffled=false,brush=0,part=CLUB.slice(),gamma=1;
+  const bh=$('brush');const bbs=[];
+  for(let k=0;k<6;k++){const b=document.createElement('button');b.type='button';b.style.background=col(k);b.setAttribute('aria-label','커뮤니티 칠하기 '+(k+1));b.onclick=()=>{brush=k;pressGroup(bbs,b)};bh.appendChild(b);bbs.push(b)}
+  pressGroup(bbs,bbs[0]);
+  let greedyP=null;
+  const pres=[...document.querySelectorAll('[data-mp]')];
+  pres.forEach(b=>b.onclick=()=>{const k=b.dataset.mp;
+    if(k==='one')part=new Array(34).fill(0);else if(k==='single')part=Array.from({length:34},(_,i)=>i);
+    else if(k==='club')part=CLUB.slice();else if(k==='greedy'){greedyP=greedyP||greedyModularity(KARATE);part=greedyP.slice()}else part=LOUVAIN_K.slice();
+    pressGroup(pres,b);upd()});
+  pressGroup(pres,pres[2]);
+  v.onClick=i=>{part[i]=brush;pressGroup(pres,null);upd()};
+  $('modG').oninput=()=>{gamma=+$('modG').value;$('modGo').textContent=gamma.toFixed(2);upd()};
+  $('modShuffle').onclick=()=>{shuffled=!shuffled;$('modShuffle').setAttribute('aria-pressed',shuffled);$('modShuffle').textContent=shuffled?'실제 네트워크로 돌아가기':'연결선수 보존 무작위화 보기';v.set(shuffled?RAND:KARATE,KPOS);upd()};
+  function upd(){
+    const G=shuffled?RAND:KARATE;v.fill(part.map(c=>col(c)));
+    G.edges.forEach(([a,b],e)=>{const l=v.lines[e];const inn=part[a]===part[b];l.style.stroke=inn?'var(--edge-strong)':'var(--edge)';l.style.strokeWidth=inn?1.8:1.2;l.style.opacity=inn?.75:1});
+    const Q=modularity(G,part,gamma);$('modQ').textContent=fmt(Q,4);
+    const st=commStats(G,part,gamma),sw=strongWeak(G,part);
+    $('modAnn').textContent=shuffled?'같은 분할에서 모든 연결선수를 유지한 채 링크를 무작위로 다시 이었습니다. Q가 0 쪽으로 무너집니다: 구조는 진짜였습니다.':
+      st.length===1?'커뮤니티 하나: L_C/L = 1이고 (k_C/2L)² = 1이므로, γ = 1에서 Q = 0입니다.':
+      st.length===34?'노드 하나씩: 내부 링크가 없으므로 Q가 음수입니다.':'';
+    const rows=st.map(s=>{const f=sw.get(s.c);return `<tr><td><span class="sw" style="background:${col(s.c)}"></span> ${s.N}</td><td>${s.Lc}</td><td>${s.kc}</td><td>${(s.Lc/G.L).toFixed(3)}</td><td>${(gamma*(s.kc/(2*G.L))**2).toFixed(3)}</td><td>${fmt(s.contrib)}</td><td>${f.strong?'강함':f.weak?'약함':'둘 다 아님'}</td></tr>`});
+    $('modTable').innerHTML=`<thead><tr><th>노드 수</th><th>L<sub>C</sub></th><th>k<sub>C</sub></th><th>L<sub>C</sub>/L</th><th>γ(k<sub>C</sub>/2L)²</th><th>Q 기여</th><th>유형</th></tr></thead><tbody>${rows.length>8?rows.slice(0,8).join('')+`<tr><td colspan="7">… 외 ${rows.length-8}개</td></tr>`:rows.join('')}</tbody>`;
+  }
+  upd();
+})();
+
+/* ---------- 8. Louvain step-through ---------- */
+(function(){
+  const v=new NetView($('lvNet'),{W:420,H:360,r:8,labels:true,label:'가라테 클럽에서의 루뱅'});v.set(KARATE,KPOS);
+  const sv=el('svg',{viewBox:'0 0 420 360',class:'net',role:'img','aria-label':'초네트워크'},$('lvSuper'));
+  let seed=1,gen,part,colorOf,nextCol,moves,level,done,running=false,supers=null;
+  function reset(){gen=louvainSteps(KARATE,1,seed);part=Array.from({length:34},(_,i)=>i);colorOf=new Map();nextCol=0;moves=0;level=0;done=false;supers=null;
+    sv.textContent='';$('lvSuperCap').textContent='초네트워크는 첫 합치기 뒤에 나타납니다';$('lvLog').textContent=`노드 순서를 시드 ${seed}로 섞었습니다. 모든 노드가 노드 하나짜리 무리에서 시작합니다.`;draw(null)}
+  function colorFor(c){if(!colorOf.has(c))colorOf.set(c,nextCol++);return col(colorOf.get(c))}
+  function draw(moved){
+    const sz=new Map();part.forEach(c=>sz.set(c,(sz.get(c)||0)+1));
+    v.fill(part.map(c=>sz.get(c)>1?colorFor(c):'var(--none)'));
+    v.gO.textContent='';if(moved)moved.forEach(o=>{const [x,y]=v.P(KPOS[o]);el('circle',{cx:x,cy:y,r:13,class:'ring'},v.gO)});
+    KE.forEach(([a,b],e)=>{v.lines[e].style.stroke=part[a]===part[b]?'var(--edge-strong)':'var(--edge)';v.lines[e].style.opacity=part[a]===part[b]?.6:1});
+    readout($('lvRead'),[['단계',done?'완료':`${level+1}단계`],['이동 횟수',moves],['커뮤니티 수',sz.size],['모듈성 Q',fmt(modularity(KARATE,part),4)]]);
+    $('lvStep').disabled=$('lvPass').disabled=$('lvRun').disabled=done||running;
+  }
+  function drawSuper(ev){
+    sv.textContent='';const pad=34,W=420,H=360;
+    const cen=Array.from({length:ev.n},()=>[0,0,0]);ev.part.forEach((s,o)=>{cen[s][0]+=KPOS[o][0];cen[s][1]+=KPOS[o][1];cen[s][2]++});
+    const P=i=>[pad+cen[i][0]/cen[i][2]*(W-2*pad),pad+cen[i][1]/cen[i][2]*(H-2*pad)];
+    const mw=Math.max(1,...ev.edges.map(e=>e[2]));
+    ev.edges.forEach(([a,b,w])=>{const [x1,y1]=P(a),[x2,y2]=P(b);el('line',{x1,y1,x2,y2,stroke:'var(--edge)','stroke-width':1+5*w/mw},sv);
+      const t=el('text',{x:(x1+x2)/2,y:(y1+y2)/2-4,'text-anchor':'middle'},sv);t.textContent=w;t.style.fontSize='12px';t.style.fill='var(--muted)'});
+    for(let i=0;i<ev.n;i++){const [x,y]=P(i);const r=8+4*Math.sqrt(ev.sizes[i]);const o=ev.part.indexOf(i);
+      el('circle',{cx:x,cy:y,r,fill:colorFor(part[o]),stroke:'var(--panel)','stroke-width':2},sv);
+      const t=el('text',{x,y:y+4,'text-anchor':'middle'},sv);t.textContent=ev.self[i];t.style.fill='#fff';t.style.fontWeight='600';t.style.fontSize='12px'}
+    $('lvSuperCap').textContent=`${ev.level}번째 단계 뒤의 초네트워크: 노드 안의 수 = 자기 고리 가중치(내부 링크), 링크 위의 수 = 무리 사이의 링크`;
+  }
+  function advance(){ // returns event
+    const r=gen.next();if(r.done){done=true;return null}const ev=r.value;
+    if(ev.type==='move'){
+      const old=part;const newPart=ev.part;
+      // keep colors: community ids are level ids; part holds level ids
+      part=newPart;moves++;draw(ev.origNodes);
+      const Q=modularity(KARATE,part);$('lvLog').textContent=`${ev.level+1}단계: ${ev.level?'초노드':'노드'} ${ev.level?ev.node:ev.origNodes[0]}가 이웃 커뮤니티로 옮겨 갑니다. Q = ${fmt(Q,4)}.`;
+    }else if(ev.type==='phaseEnd'){
+      part=ev.part;draw(null);$('lvLog').textContent=`${ev.level+1}단계: 더 이상 어떤 이동도 Q를 올리지 못합니다.`;
+    }else if(ev.type==='aggregate'){
+      // remap colors to new super ids
+            const oldPart=part;part=ev.part;
+      const newColorOf=new Map();ev.part.forEach((s,o)=>{if(!newColorOf.has(s)){const c=colorOf.get(oldPart[o]);if(c!==undefined)newColorOf.set(s,c)}});
+      colorOf=newColorOf;level=ev.level;drawSuper(ev);draw(null);
+      $('lvLog').textContent=`합치기: 초노드 ${ev.n}개. 이제 초네트워크에서 첫 단계를 되풀이합니다.`;
+    }else if(ev.type==='done'){done=true;draw(null);$('lvLog').textContent=`완료: 초네트워크에서도 어떤 이동도 Q를 개선하지 못합니다. 커뮤니티 ${new Set(part).size}개, Q = ${fmt(modularity(KARATE,part),4)}.`}
+    return ev;
+  }
+  $('lvStep').onclick=()=>{let ev;do{ev=advance()}while(ev&&ev.type!=='move'&&ev.type!=='aggregate'&&ev.type!=='done')};
+  $('lvPass').onclick=()=>{let ev;do{ev=advance()}while(ev&&ev.type!=='phaseEnd'&&ev.type!=='aggregate'&&ev.type!=='done')};
+  $('lvRun').onclick=async()=>{running=true;$('lvSeed').disabled=true;draw(null);let ev;
+    while((ev=advance())&&ev.type!=='done'){await sleep(reduceMotion?0:ev.type==='move'?110:700)}
+    running=false;$('lvSeed').disabled=false;draw(null)};
+  $('lvSeed').onclick=()=>{seed++;reset()};
+  reset();
+})();
+
+/* ---------- 9. resolution limit ---------- */
+(function(){
+  const v=new NetView($('rlNet'),{W:600,H:440,pad:16,r:5,label:'클리크의 고리'});
+  let mode='louvain';const mb=[...document.querySelectorAll('[data-rl]')];
+  mb.forEach(b=>b.onclick=()=>{mode=b.dataset.rl;pressGroup(mb,b);upd()});
+  let lastKey='',G,pos,single,pair;
+  function build(nc,m){const E=[];for(let t=0;t<nc;t++){for(let a=0;a<m;a++)for(let b=a+1;b<m;b++)E.push([t*m+a,t*m+b]);E.push([t*m+m-1,((t+1)%nc)*m])}
+    G=new Graph(nc*m,E);const R=0.4,r=Math.min(0.06,1.4/nc+0.012);pos=[];
+    for(let t=0;t<nc;t++){const A=2*Math.PI*t/nc;const cx=.5+R*Math.cos(A),cy=.5+R*Math.sin(A);
+      for(let a=0;a<m;a++){const B=A+Math.PI+2*Math.PI*(a+.5)/m;pos.push([cx+r*Math.cos(B),cy+r*Math.sin(B)])}}
+    single=pos.map((_,i)=>Math.floor(i/m));pair=single.map(c=>Math.floor(c/2));v.r=nc>28?3.5:5;v.set(G,pos)}
+  function upd(){
+    const nc=+$('rlN').value,m=+$('rlM').value,g=+$('rlG').value;$('rlNo').textContent=nc;$('rlMo').textContent=m;$('rlGo').textContent=g.toFixed(2);
+    if(lastKey!==nc+','+m){build(nc,m);lastKey=nc+','+m}
+    const lv=louvain(G,g,3);const shown=mode==='single'?single:mode==='pair'?pair:lv;
+    v.fill(colorsFor(shown));
+    G.edges.forEach(([a,b],e)=>{v.lines[e].style.stroke=shown[a]===shown[b]?'var(--edge-strong)':'var(--marker)';v.lines[e].style.opacity=shown[a]===shown[b]?.5:1});
+    const q1=modularity(G,single,g),q2=modularity(G,pair,g);const kc=m*(m-1)+2,thr=Math.sqrt(2*G.L);
+    readout($('rlRead'),[['Q, 클리크마다 하나',fmt(q1,4)],['Q, 클리크 둘씩',fmt(q2,4)],['루뱅이 찾은 수',numComms(lv)+'개'],['클리크의 k_C',kc],['√(2L)',thr.toFixed(1)]]);
+    $('rlAnn').textContent=q2>q1+1e-12?`둘씩이 이김 (${fmt(q2,3)} > ${fmt(q1,3)}): 모듈성으로는 더 이상 클리크 하나하나를 구별할 수 없습니다.`:`클리크 하나씩이 이김 (${fmt(q1,3)} ≥ ${fmt(q2,3)}): 모든 클리크가 구별됩니다.`;
+  }
+  ['rlN','rlM','rlG'].forEach(id=>$(id).oninput=upd);upd();
+})();
+
+/* ---------- 10. SBM ---------- */
+(function(){
+  const sizes=[30,30,30],q=3;let P,sel=[0,0],seed=1;
+  const presets={comm:[[.35,.02,.02],[.02,.35,.02],[.02,.02,.35]],cp:[[.5,.15,.15],[.15,.02,.02],[.15,.02,.02]],bip:[[0,.18,.18],[.18,0,.18],[.18,.18,0]],rand:[[.1,.1,.1],[.1,.1,.1],[.1,.1,.1]]};
+  const pb=[...document.querySelectorAll('[data-sb]')];
+  pb.forEach(b=>b.onclick=()=>{P=presets[b.dataset.sb].map(r=>r.slice());pressGroup(pb,b);gen()});
+  const v=new NetView($('sbNet'),{W:600,H:380,r:6,label:'SBM 표본'});
+  const mat=$('sbMatrix'),adj=$('sbAdj');
+  function drawMatrix(){mat.textContent='';const c=200/q,o=10;
+    for(let r=0;r<q;r++)for(let s=0;s<q;s++){const g=el('g',{class:'cell',tabindex:0,role:'button','aria-label':`p ${r+1}${s+1} = ${P[r][s]}`},mat);
+      const shade=Math.round(100-P[r][s]/0.6*100);
+      const rc=el('rect',{x:o+s*c,y:o+r*c,width:c-3,height:c-3,rx:3,class:'cell',stroke:(sel[0]===r&&sel[1]===s)||(sel[0]===s&&sel[1]===r)?'var(--marker)':'var(--rule)','stroke-width':(sel[0]===r&&sel[1]===s)?3:1.5},g);rc.style.fill=`color-mix(in srgb, var(--ink) ${100-shade}%, var(--panel))`;
+      const t=el('text',{x:o+s*c+c/2-1.5,y:o+r*c+c/2+5,'text-anchor':'middle'},g);t.textContent=P[r][s].toFixed(2);t.style.fill=P[r][s]>0.25?'var(--panel)':'var(--ink)';t.style.fontSize='14px';t.style.fontFamily='var(--text)';t.style.pointerEvents='none';
+      const pick=()=>{sel=[r,s];syncSlider();drawMatrix()};g.addEventListener('click',pick);g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}})}
+  }
+  function syncSlider(){const [r,s]=sel;$('sbCellName').innerHTML=`p<sub>${r+1}${s+1}</sub>`;$('sbP').value=P[r][s];$('sbPo').textContent=P[r][s].toFixed(2)}
+  $('sbP').oninput=()=>{const [r,s]=sel,x=+$('sbP').value;P[r][s]=P[s][r]=x;$('sbPo').textContent=x.toFixed(2);pressGroup(pb,null);drawMatrix()};
+  $('sbP').onchange=gen;
+  $('sbNew').onclick=()=>{seed++;gen()};
+  function gen(){
+    drawMatrix();syncSlider();
+    const {G,groups}=sbm(sizes,P,seed);
+    adj.textContent='';const n=G.n,s=200/n;el('rect',{x:10,y:10,width:200,height:200,fill:'none',stroke:'var(--rule)'},adj);
+    for(const [a,b] of G.edges){el('rect',{x:10+a*s,y:10+b*s,width:s,height:s,fill:col(groups[b])},adj);el('rect',{x:10+b*s,y:10+a*s,width:s,height:s,fill:col(groups[a])},adj)}
+    [30,60].forEach(k=>{el('line',{x1:10+k*s,x2:10+k*s,y1:10,y2:210,class:'axis','stroke-dasharray':'3 3'},adj);el('line',{y1:10+k*s,y2:10+k*s,x1:10,x2:210,class:'axis','stroke-dasharray':'3 3'},adj)});
+    const pos=layout(G,{seed:seed+3,iters:300,gravity:0.07});v.set(G,pos);v.fill(groups.map(col));v.lines.forEach(l=>{l.style.strokeWidth=.8;l.style.opacity=.7});
+    const lv=louvain(G,1,1);
+    readout($('sbRead'),[['링크',G.L],['평균 연결선수',(2*G.L/G.n).toFixed(1)],['심어 둔 무리의 Q',fmt(modularity(G,groups))],['루뱅 무리 수',numComms(lv)],['NMI(루뱅, 심어 둔 무리)',nmi(lv,groups).toFixed(2)]]);
+  }
+  P=presets.comm.map(r=>r.slice());gen();
+})();
+
+/* ---------- 11. benchmarks ---------- */
+(function(){
+  const N=128,q=4;let seed=1;const sweep={pts:[]};
+  const v=new NetView($('bmNet'),{W:600,H:400,r:6.5,label:'GN 벤치마크 표본'});
+  const make=(kout,s)=>{const pin=(16-kout)/31,pout=kout/96;const P=Array.from({length:q},(_,r)=>Array.from({length:q},(_,c)=>r===c?pin:pout));return sbm([32,32,32,32],P,s)};
+  function upd(){
+    const k=+$('bmK').value;$('bmKo').textContent=k.toFixed(1);
+    const {G,groups}=make(k,seed);const pos=layout(G,{seed:seed+9,iters:260,gravity:0.07});
+    v.set(G,pos);v.lines.forEach(l=>{l.style.strokeWidth=.6;l.style.opacity=.45});
+    const lv=louvain(G,1,seed);const cf=colorsFor(lv);v.fill(cf);
+    v.nodes.forEach((nd,i)=>{nd.c.style.stroke=col(groups[i]+4);nd.c.style.strokeWidth=2.4});
+    const score=nmi(lv,groups);
+    readout($('bmRead'),[['p_in',((16-k)/31).toFixed(3)],['p_out',(k/96).toFixed(3)],['루뱅 무리 수',numComms(lv)],['Q',fmt(modularity(G,lv))],['NMI',score.toFixed(3)]]);
+    drawChart(k,score);
+  }
+  function drawChart(k,score){
+    const series=[{pts:sweep.pts,color:'var(--ink)'}];
+    const {X,Y}=lineChart($('bmChart'),{series,xmin:0,xmax:12,ymin:0,ymax:1,xlab:'⟨k_ext⟩',ylab:'NMI',markX:k,points:true});
+    if(!isNaN(score))el('circle',{cx:X(k),cy:Y(score),r:5.5,fill:'var(--marker)'},$('bmChart'));
+  }
+  $('bmK').oninput=()=>{$('bmKo').textContent=(+$('bmK').value).toFixed(1)};
+  $('bmK').onchange=upd;
+  $('bmNew').onclick=()=>{seed++;upd()};
+  $('bmSweep').onclick=async()=>{const b=$('bmSweep');b.disabled=true;sweep.pts=[];
+    for(let k=0;k<=12;k++){let s=0;for(let r=0;r<3;r++){const {G,groups}=make(k,100+r*7+k);s+=nmi(louvain(G,1,r+1),groups)}sweep.pts.push([k,s/3]);
+      $('bmLog').textContent=`훑는 중… ⟨k_ext⟩ = ${k}`;drawChart(+$('bmK').value,NaN);await sleep(20)}
+    $('bmLog').textContent='점마다 표본 3개에 대한 평균 NMI. 무리가 잘 떨어져 있는 동안은 거의 완벽하게 찾다가, ⟨k_ext⟩가 ⟨k_int⟩에 다가가면 실패합니다.';b.disabled=false;upd()};
+  upd();
+  $('bmLog').textContent=`실제 벤치마크 확인: 가라테 클럽에서 루뱅과 실제 갈라짐을 비교하면 NMI = ${nmi(LOUVAIN_K,CLUB).toFixed(2)}입니다 (루뱅은 무리 ${numComms(LOUVAIN_K)}개를 찾고, 클럽은 둘로 갈라졌습니다).`;
+})();
+})();
+
+</script>
+<script>
+(() => {
+  // light/dark switch; the choice is remembered across all of the course demos
+  const btn = document.getElementById("themeBtn"), root = document.documentElement, mq = matchMedia("(prefers-color-scheme: dark)");
+  const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
+  const current = () => root.dataset.theme || (mq.matches ? "dark" : "light");
+  const sync = () => { const dark = current() === "dark", label = dark ? "밝은 화면으로 전환" : "어두운 화면으로 전환";
+    btn.innerHTML = dark ? SUN : MOON; btn.setAttribute("aria-label", label); btn.title = label; };
+  btn.addEventListener("click", () => { const next = current() === "dark" ? "light" : "dark"; root.dataset.theme = next;
+    try { localStorage.setItem("netsci-theme", next); } catch (e) {} sync(); });
+  mq.addEventListener("change", sync);
+  sync();
+})();
+</script>
+</body>
+</html>
