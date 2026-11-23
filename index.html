@@ -346,6 +346,7 @@ nx.community.greedy_modularity_communities(G)</div>
 # or: import community; community.best_partition(G)</div>
     <p>Variants such as GenLouvain (generalized Louvain) extend the idea, e.g. to multilayer networks.</p>
     <p class="note blue">For a slower, step-by-step look, with the modularity gain of every candidate move, the 16-node example from the original paper, and hundreds of runs on the karate club, see the supplementary demo <a href="https://lshlj82.github.io/Louvain-algorithm/">The Louvain algorithm, step by step</a> (<a href="https://lshlj82.github.io/Louvain-algorithm/ko.html" hreflang="ko" lang="ko">한국어</a> · <a href="https://github.com/lshlj82/Louvain-algorithm">source</a>).</p>
+    <p class="note blue">Because Louvain visits the nodes in a random order, different runs can give different communities. What that disagreement tells us about nodes and resolutions is the topic of the supplementary demo <a href="https://lshlj82.github.io/community-inconsistency/">Inconsistent communities</a>.</p>
   </div>
   <figure class="bench">
     <div class="controls"><button type="button" class="primary" id="lvStep">Move one node</button><button type="button" id="lvPass">Finish this step</button><button type="button" id="lvRun">Run to the end</button><button type="button" id="lvSeed">Reshuffle order</button></div>
