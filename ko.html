@@ -383,7 +383,7 @@ nx.community.greedy_modularity_communities(G)</div>
     <ul>
       <li>\(p_{rr}&gt;p_{rs}\): 커뮤니티 구조</li>
       <li>\(p_{rr}&lt;p_{rs}\): 이류적 구조. \(p_{rr}=0\)이면 다분 네트워크</li>
-      <li>\(p_{11}\gg p_{12}\gg p_{22}\): 핵–주변부</li>
+      <li>\(p_{11}\gg p_{12}\gg p_{22}\): 중심–주변부</li>
       <li>모두 같음: 고전적인 무작위 그래프로, 무리 구조가 전혀 없음</li>
     </ul>
     <p>커뮤니티를 찾으려면 모형을 맞춥니다: 주어진 분할에 대해 SBM이 관찰된 링크를 재현할 가능도를 최대화합니다. 연결선수 보정판(DCSBM)은 다음을 최대화합니다</p>
@@ -393,7 +393,7 @@ nx.community.greedy_modularity_communities(G)</div>
   </div>
   <figure class="bench">
     <p class="how">블록 행렬의 칸을 클릭한 다음 그 확률을 정하세요.</p>
-    <div class="controls"><div class="seg" role="group" aria-label="SBM 미리 설정"><button type="button" data-sb="comm" aria-pressed="true">커뮤니티</button><button type="button" data-sb="cp">핵–주변부</button><button type="button" data-sb="bip">이류적</button><button type="button" data-sb="rand">무작위</button></div><button type="button" id="sbNew">새 표본</button></div>
+    <div class="controls"><div class="seg" role="group" aria-label="SBM 미리 설정"><button type="button" data-sb="comm" aria-pressed="true">커뮤니티</button><button type="button" data-sb="cp">중심–주변부</button><button type="button" data-sb="bip">이분적</button><button type="button" data-sb="rand">무작위</button></div><button type="button" id="sbNew">새 표본</button></div>
     <div class="two">
       <div><svg id="sbMatrix" class="matrix" viewBox="0 0 220 220" role="group" aria-label="블록 확률 행렬"></svg>
         <label class="slider" style="margin-top:8px"><span id="sbCellName">p</span> <input type="range" id="sbP" min="0" max="0.6" step="0.01"> <output id="sbPo"></output></label></div>
